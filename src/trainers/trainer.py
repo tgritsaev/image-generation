@@ -95,7 +95,7 @@ class Trainer:
         constructed_imgs = np.stack(constructed_imgs)
         print("?????????")
 
-        # self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
+        self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
         self.writer.log_image("test", make_test_image(constructed_imgs, np.cat(targets)))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):

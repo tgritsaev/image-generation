@@ -10,7 +10,7 @@ def inf_loop(data_loader):
         yield from loader
 
 
-def make_train_image(samples: np.array, n: int = 10):
+def make_train_image(samples: np.array, n: int = 5):
     _, c, h, w = samples.shape
     mega_image = np.zeros((h, w * n, c))
     for i in range(n):

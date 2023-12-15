@@ -1,3 +1,4 @@
+import random
 import os
 
 import torch
@@ -31,9 +32,15 @@ def read_dir(path):
 
 
 class ArtBench10_256x256:
-    def __init__(self, root, train: bool = True):
+    def __init__(self, root, train: bool = True, limit: int = None):
         subdir_name = "train" if train else "test"
         self.img_path, self.target = read_dir(f"{root}/{subdir_name}")
+        random.seed(0)
+        random.shuffle(self.img_path)
+        random.seed(0)
+        random.shuffle(self.target)
+        self.img_path = self.img_path[:limit]
+        self.target = self.target[:limit]
 
     def __len__(self):
         return len(self.img_path)
