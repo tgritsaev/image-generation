@@ -1,3 +1,6 @@
+import torch.nn as nn
+
+
 def weights_init(m):
     classname = m.__class__.__name__
     if classname.find("Conv") != -1:
@@ -40,10 +43,10 @@ class Generator(nn.Module):
 
 
 class Discriminator(nn.Module):
-    def __init__(self, ngpu):
-        super(Discriminator, self).__init__()
-        self.ngpu = ngpu
-        self.main = nn.Sequential(
+    def __init__(self):
+        super().__init__()
+
+        self.layers = nn.Sequential(
             # input is ``(nc) x 64 x 64``
             nn.Conv2d(nc, ndf, 4, 2, 1, bias=False),
             nn.LeakyReLU(0.2, inplace=True),
@@ -65,4 +68,4 @@ class Discriminator(nn.Module):
         )
 
     def forward(self, input):
-        return self.main(input)
+        return self.layers(input)
