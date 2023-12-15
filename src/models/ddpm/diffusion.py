@@ -3,7 +3,7 @@ import torch
 import torch.nn.functional as F
 
 from src.models.base_model import BaseModel
-from src.models.diffusion.unet import UNet
+from src.models.ddpm.unet import UNet
 
 
 # utility function. basically, returns arr[timesteps], where timesteps are indices. (look at class Diffusion)

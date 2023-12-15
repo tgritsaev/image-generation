@@ -1,6 +1,6 @@
 # Image generation with Diffusion Model
 HSE Deep Learning course homework.
-During this homework I implemented Diffusion Model which generates simple images
+During this homework I implemented VAE and Diffusion models including training pipeline.
 See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week06-transformers/bhw01).
 
 ## Code organization
@@ -11,11 +11,26 @@ See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week
 ├── train.py              <- train code.
 ├── test.py               <- test code.
 │
-└── src                   <- main code directory.
-    ├── loss.py                     <- transformer loss  
-    ├── model.py                    <- transformer model  
-    ├── tinystories_dataset.py      <- TinyStories dataset, collate_fn 
-    └── utils.py                    <- utils: constants, Tokenizer and its' functions, WandbWriter
+└── src/                  <- main code directory.
+    ├── datasets/
+    │   ├── artbench10_32x32.py
+    │   ├── artbench10_256x256.py
+    │   ├── base_dataset.py
+    │   └── mnist_wrapper.py 
+    │            
+    ├── models/
+    │   ├── cvae/
+    │   │   └── cvae.py
+    │   ├── ddpm/
+    │   │   ├── diffusion.py
+    │   │   └── unet.py
+    │   └── __init__.py                 <- transformer model  
+    │
+    ├── utils/   
+    │   ├── __init__.py
+    │   └── utils.py               <- utils: constants, Tokenizer and its' functions, WandbWriter
+    ├── 
+    └──
 ```
 
 ## Installation
@@ -24,8 +39,7 @@ See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week
 pip3 install -r requirements.txt
 ```
 2. The dataset I use is [ArtBench](https://paperswithcode.com/dataset/artbench-10). Download the 256x256 version here: [ArtBench-10 on GitHub](https://github.com/liaopeiyuan/artbench/blob/main/README.md). Download the 32x32 version by the previous link or from the [Kaggle (only 32x32)](https://www.kaggle.com/datasets/alexanderliao/artbench10), the extended version [Kaggle (256x256 + AI gen)](https://www.kaggle.com/datasets/ravidussilva/real-ai-art). 
-If you run `train.py`, the 32x32 version will be downloaded automatically.
-4. Download my VAE checkpoint from the [google drive](TODO).
+3. Download my VAE checkpoint from the [google drive](TODO).
 
 
 ## Train
