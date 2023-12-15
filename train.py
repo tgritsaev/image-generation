@@ -47,7 +47,7 @@ def main(args):
     optimizer = torch.optim.AdamW(model.parameters(), **config["optimizer"])
 
     max_lr, warmup_iters = config["lr_scheduler"]["linear_warmup"].values()
-    linear_lambda = lambda iter: max_lr * (iter + 1) / warmup_iters
+    linear_lambda = lambda iter: (iter + 1) / warmup_iters
     gamma = config["lr_scheduler"]["exponential"]["gamma"]
     exponential_lambda = lambda iter: max_lr * (gamma ** (iter + 1 - warmup_iters))
     lr_lambda = lambda iter: linear_lambda(iter) if iter < warmup_iters else exponential_lambda(iter)
