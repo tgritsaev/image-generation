@@ -89,8 +89,8 @@ class Trainer:
                 constructed_imgs.append(samples.detach().cpu().numpy())
                 targets.append(batch["target"].detach().cpu().numpy())
 
-        real_imgs = torch.from_numpy(np.stack(real_imgs))
-        constructed_imgs = torch.from_numpy(np.stack(constructed_imgs))
+        real_imgs = torch.from_numpy(np.concatenate(real_imgs))
+        constructed_imgs = torch.from_numpy(np.concatenate(constructed_imgs))
         print("!!", constructed_imgs.shape)
 
         # self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
