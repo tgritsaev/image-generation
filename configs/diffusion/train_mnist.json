@@ -1,0 +1,42 @@
+{
+    "model": {
+        "type": "Diffusion",
+        "args": {
+            "beta_schedule_name": "sigmoid",
+            "num_diffusion_timesteps": 250,
+            "n_channels": 1
+        }
+    },
+    "data": {
+        "type": "MNISTWrapper",
+        "dataset_args": {
+            "root": "mnist",
+            "train": true,
+            "download": true
+        },
+        "dataloader_args": {
+            "batch_size": 32,
+            "num_workers": 1,
+            "shuffle": true
+        }
+    },
+    "optimizer": {
+        "weight_decay": 1e-5
+    },
+    "lr_scheduler": {
+        "linear_warmup": {
+            "max_lr": 1e-3,
+            "warmup_iters": 1000
+        },
+        "exponential": {
+            "gamma": 0.9996
+        }
+    },
+    "trainer": {
+        "epochs": 10,
+        "iterations_per_epoch": 1000
+    },
+    "wandb": {
+        "project": "dl2-MNIST-generation"
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "model": {
+        "type": "ConditionalVAE",
+        "args": {
+            "in_channels": 3,
+            "num_classes": 10,
+            "latent_dim": 512,
+            "img_size": 256
+        }
+    },
+    "data": { 
+        "train": {
+            "type": "ArtBench10_256x256",
+            "dataset_args": {
+                "root": "artbench-10-imagefolder-split",
+                "train": true
+
+            },
+            "dataloader_args": {
+                "batch_size": 32,
+                "num_workers": 1,
+                "shuffle": true
+            }
+        },
+        "test": {
+            "type": "ArtBench10_256x256",
+            "dataset_args": {
+                "root": "artbench-10-imagefolder-split",
+                "train": false
+            },
+            "dataloader_args": {
+                "batch_size": 50,
+                "num_workers": 1,
+                "shuffle": false
+            }
+        }
+    },
+    "optimizer": {
+        "weight_decay": 1e-5
+    },
+    "lr_scheduler": {
+        "linear_warmup": {
+            "max_lr": 1e-3,
+            "warmup_iters": 1000
+        },
+        "exponential": {
+            "gamma": 0.9996
+        }
+    },
+    "trainer": {
+        "epochs": 10,
+        "iterations_per_epoch": 1000
+    },
+    "wandb": {
+        "project": "dl2-generation"
+    }
+}
