@@ -110,7 +110,7 @@ class ConditionalVAE(BaseModel):
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu**2 - log_var.exp(), dim=1), dim=0)
 
         loss = reconstruction_loss + img.shape[0] * kld_loss
-        return {"loss": loss, "reconstruction_loss": reconstruction_loss, "KLD": -kld_loss}
+        return loss
 
     def sample(self, num_samples: int, target: Tensor, z=None) -> Tensor:
         if z is None:
