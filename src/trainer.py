@@ -1,5 +1,6 @@
 from tqdm import tqdm
 
+import numpy as np
 import torch
 import torch.nn as nn
 
@@ -65,7 +66,7 @@ class Trainer:
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                self.writer.log_image("train", make_train_image(batch["img"]))
+                self.writer.log_image("train", make_train_image(batch["img"].detach().cpu().numpy()))
 
             if batch_idx == self.iterations_per_epoch:
                 break
@@ -83,15 +84,15 @@ class Trainer:
             bs = batch["target"].shape[0]
             samples = self.model.sample(bs, batch["target"], z=self.z[last_idx : last_idx + bs, ...])
 
-            real_imgs.append(batch["img"].cpu())
-            constructed_imgs.append(samples.cpu())
+            real_imgs.append(batch["img"].detach().cpu().numpy())
+            constructed_imgs.append(samples.detach().cpu().numpy())
             targets.append(batch["target"])
 
-        real_imgs = torch.stack(real_imgs)
-        constructed_imgs = torch.stack(constructed_imgs)
+        real_imgs = np.stack(real_imgs)
+        constructed_imgs = np.stack(constructed_imgs)
 
         self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("test", make_test_image(constructed_imgs, torch.cat(targets)))
+        self.writer.log_image("test", make_test_image(constructed_imgs, np.cat(targets)))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")
