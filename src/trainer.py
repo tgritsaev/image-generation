@@ -65,7 +65,7 @@ class Trainer:
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                self.writer.log_image(make_train_image(batch["img"], batch["target"]))
+                self.writer.log_image("train", make_train_image(batch["img"], batch["target"]))
 
             if batch_idx == self.iterations_per_epoch:
                 break
@@ -91,7 +91,7 @@ class Trainer:
         constructed_imgs = torch.stack(constructed_imgs)
 
         self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
-        self.writer.log_image(make_test_image(constructed_imgs, torch.cat(targets)))
+        self.writer.log_image("test", make_test_image(constructed_imgs, torch.cat(targets)))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")
