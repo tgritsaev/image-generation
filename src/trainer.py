@@ -79,14 +79,15 @@ class Trainer:
         real_imgs = []
         constructed_imgs = []
         targets = []
-        for batch in tqdm(self.test_dataloader):
-            move_batch_to_device(batch, self.device)
-            bs = batch["target"].shape[0]
-            samples = self.model.sample(bs, batch["target"], z=self.z[last_idx : last_idx + bs, ...])
+        with torch.no_grad():
+            for batch in tqdm(self.test_dataloader):
+                move_batch_to_device(batch, self.device)
+                bs = batch["target"].shape[0]
+                samples = self.model.sample(bs, batch["target"], z=self.z[last_idx : last_idx + bs, ...])
 
-            real_imgs.append(batch["img"].detach().cpu().numpy())
-            constructed_imgs.append(samples.detach().cpu().numpy())
-            targets.append(batch["target"])
+                real_imgs.append(batch["img"].detach().cpu().numpy())
+                constructed_imgs.append(samples.detach().cpu().numpy())
+                targets.append(batch["target"])
 
         real_imgs = np.stack(real_imgs)
         constructed_imgs = np.stack(constructed_imgs)
