@@ -10,7 +10,7 @@ import src.models as model_module
 import src.datasets as datasets_module
 
 from src.collate import collate_fn
-from src.trainer import Trainer
+from src.trainers.trainer import Trainer
 from src.utils.utils import WandbWriter, LocalWriter, inf_loop
 
 

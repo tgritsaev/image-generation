@@ -15,7 +15,7 @@ def make_train_image(samples: np.array, n: int = 10):
     mega_image = np.zeros((h, w * n, c))
     for i in range(n):
         mega_image[0:h, w * i : w * (i + 1), :] = samples[i]
-    return mega_image
+    return mega_image.transpose(1, 2, 0)
 
 
 def make_test_image(samples: np.array, targets: np.array, n: int = 3, target_cnt: int = 10):
@@ -29,7 +29,7 @@ def make_test_image(samples: np.array, targets: np.array, n: int = 3, target_cnt
                     used[idx] = 1
                     mega_image[h * i : h * (i + 1), w * t : w * (t + 1), :] = samples[idx]
                     break
-    return mega_image
+    return mega_image.transpose(1, 2, 0)
 
 
 class LocalWriter:
