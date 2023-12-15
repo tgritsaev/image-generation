@@ -89,11 +89,8 @@ class Trainer:
                 constructed_imgs.append(samples.detach().cpu().numpy())
                 targets.append(batch["target"])
 
-        print("!!!!!!!!!")
-        real_imgs = np.stack(real_imgs)
-        print("()()()()()()()())")
-        constructed_imgs = np.stack(constructed_imgs)
-        print("?????????")
+        real_imgs = torch.from_numpy(np.stack(real_imgs))
+        constructed_imgs = torch.from_numpy(np.stack(constructed_imgs))
 
         self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
         self.writer.log_image("test", make_test_image(constructed_imgs, np.cat(targets)))
