@@ -14,8 +14,9 @@ def make_train_image(samples: np.array, n: int = 10):
     _, h, w, c = samples.shape
     mega_image = np.zeros((h * n, w, c))
     for i in range(n):
+        print(samples[i].shape)
         mega_image[i * h : (i + 1) * h, 0:w, :] = samples[i]
-    return mega_image.transpose(1, 2, 0)
+    return mega_image
 
 
 def make_test_image(samples: np.array, targets: np.array, n: int = 3, target_cnt: int = 10):
