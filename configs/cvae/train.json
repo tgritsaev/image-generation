@@ -2,7 +2,7 @@
     "model": {
         "type": "ConditionalVAE",
         "args": {
-            "in_channels": 3,
+            "n_channels": 3,
             "num_classes": 10,
             "latent_dim": 512,
             "img_size": 256
