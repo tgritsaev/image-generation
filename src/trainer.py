@@ -65,7 +65,7 @@ class Trainer:
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                self.writer.log_image("train", make_train_image(batch["img"], batch["target"]))
+                self.writer.log_image("train", make_train_image(batch["img"]))
 
             if batch_idx == self.iterations_per_epoch:
                 break
