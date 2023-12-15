@@ -13,6 +13,8 @@ def inf_loop(data_loader):
 def make_train_image(samples, n=10):
     print(samples.shape)
     _, h, w, c = samples.shape
+    print(h, w, c)
+    print(type(h), type(w), type(c))
     mega_image = np.zeros((h, w * n, c))
     for i in range(n):
         mega_image[0:h, w * i : w * (i + 1), :] = samples[i].numpy()
