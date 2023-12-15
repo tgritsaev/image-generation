@@ -24,7 +24,7 @@ class ConditionalVAE(BaseModel):
         self.img_size = img_size
 
         self.embed_class = nn.Linear(num_classes, img_size * img_size)
-        self.embed_data = nn.Conv2d(n_channels, in_channels, kernel_size=1)
+        self.embed_data = nn.Conv2d(n_channels, n_channels, kernel_size=1)
 
         if hidden_dims is None:
             hidden_dims = [16, 32, 64, 128, 256, 512, 1024]
