@@ -49,7 +49,7 @@
     },
     "trainer": {
         "epochs": 10,
-        "iterations_per_epoch": 2500
+        "iterations_per_epoch": 250
     },
     "wandb": {
         "project": "dl2-generation"

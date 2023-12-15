@@ -91,6 +91,7 @@ class Trainer:
 
         real_imgs = torch.from_numpy(np.stack(real_imgs))
         constructed_imgs = torch.from_numpy(np.stack(constructed_imgs))
+        print("!!", constructed_imgs.shape)
 
         # self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
         self.writer.log_image("test", make_test_image(constructed_imgs, np.concatenate(targets)))
