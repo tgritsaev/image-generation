@@ -26,7 +26,7 @@ class Trainer:
         device: torch.device,
         epochs: int,
         iterations_per_epoch: int,
-        log_every_step: int = 100,
+        log_every_step: int = 1,
     ):
         self.model = model
         self.train_inf_dataloader = train_inf_dataloader
