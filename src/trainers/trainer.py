@@ -57,11 +57,11 @@ class Trainer:
             batch.update(output)
 
             loss = self.model.loss_function(**batch)
-            self.writer.log({"train_loss": loss.item()})
-            sum_loss += loss.item()
+            loss_item = loss.item()
+            sum_loss += loss_item
             loss.backward()
 
-            self.writer.log({"learning_rate": self.lr_scheduler.get_last_lr()[0]})
+            self.writer.log({"train_loss": loss_item, "learning_rate": self.lr_scheduler.get_last_lr()[0]})
             self.optimizer.step()
             self.lr_scheduler.step()
 
@@ -87,7 +87,7 @@ class Trainer:
 
                 real_imgs.append(batch["img"].detach().cpu().numpy())
                 constructed_imgs.append(samples.detach().cpu().numpy())
-                targets.append(batch["target"])
+                targets.append(batch["target"].detach().cpu().numpy())
 
         real_imgs = torch.from_numpy(np.stack(real_imgs))
         constructed_imgs = torch.from_numpy(np.stack(constructed_imgs))
