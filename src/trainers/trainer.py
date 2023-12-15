@@ -118,7 +118,7 @@ class Trainer:
 
         for epoch in tqdm(range(self.epochs)):
             train_avg_loss = self.train_epoch()
-            self.test()
+            # self.test()
 
             self.log_after_training_epoch(epoch, train_avg_loss)
             self.save_state(epoch)
