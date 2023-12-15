@@ -17,7 +17,7 @@ def make_train_image(samples, n=10):
     print(type(h), type(w), type(c))
     mega_image = np.zeros((h, w * n, c))
     for i in range(n):
-        mega_image[0:h, w * i : w * (i + 1), :] = samples[i].numpy()
+        mega_image[0:h, w * i : w * (i + 1), :] = samples[i].detach().cpu().numpy()
     return mega_image
 
 
@@ -30,7 +30,7 @@ def make_test_image(samples, targets, n=3, target_cnt=10):
             for idx in range(len(used)):
                 if targets[idx] == t and used[idx] == 0:
                     used[idx] = 1
-                    mega_image[h * i : h * (i + 1), w * t : w * (t + 1), :] = samples[idx].numpy()
+                    mega_image[h * i : h * (i + 1), w * t : w * (t + 1), :] = samples[idx].detach().cpu().numpy()
                     break
     return mega_image
 
