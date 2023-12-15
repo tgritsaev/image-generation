@@ -10,7 +10,15 @@ def inf_loop(data_loader):
         yield from loader
 
 
-def make_one_img(samples, targets, n=3, target_cnt=10):
+def make_train_img(samples, n=10):
+    _, h, w, c = samples.shape
+    mega_image = np.zeros((h, w * n, c))
+    for i in range(n):
+        mega_image[0:h, w * i : w * (i + 1), :] = samples[i].numpy()
+    return mega_image
+
+
+def make_test_img(samples, targets, n=3, target_cnt=10):
     used = [0 for i in range(targets.shape[0])]
     _, h, w, c = samples.shape
     mega_image = np.zeros((h * n, w * target_cnt, c))
@@ -19,7 +27,7 @@ def make_one_img(samples, targets, n=3, target_cnt=10):
             for idx in range(len(used)):
                 if targets[idx] == t and used[idx] == 0:
                     used[idx] = 1
-                    mega_image[h * i : h * (i + 1), w * t : w * (t + 1), :] = samples[idx]
+                    mega_image[h * i : h * (i + 1), w * t : w * (t + 1), :] = samples[idx].numpy()
                     break
     return mega_image
 
@@ -34,8 +42,8 @@ class LocalWriter:
     def log_table(self, table):
         print(f"local_wandb table: {table}")
 
-    def log_img(self, img):
-        print(f"local_wandb img: {img}")
+    def log_img(self, part, img):
+        print(f"local_wandb {part}_img: {img}")
 
     def finish(self):
         pass
@@ -49,11 +57,8 @@ class WandbWriter:
     def log(self, msg):
         wandb.log(msg)
 
-    def log_table(self, table):
-        wandb.log({"train": wandb.Table(data=table, columns=["pred", "target"])})
-
-    def log_img(self, img):
-        wandb.log({"samples": wandb.Image(img)})
+    def log_img(self, part, img):
+        wandb.log({f"{part}_samples": wandb.Image(img)})
 
     def finish(self):
         wandb.finish()

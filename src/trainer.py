@@ -5,7 +5,7 @@ import torch.nn as nn
 
 from piq import FID, SSIMLoss
 
-from src.utils.utils import make_one_img
+from src.utils.utils import make_train_img, make_test_img
 
 
 def move_batch_to_device(batch, device):
@@ -26,6 +26,7 @@ class Trainer:
         device: torch.device,
         epochs: int,
         iterations_per_epoch: int,
+        log_every_step: int = 100,
     ):
         self.model = model
         self.train_inf_dataloader = train_inf_dataloader
@@ -37,6 +38,7 @@ class Trainer:
         self.device = device
         self.epochs = epochs
         self.iterations_per_epoch = iterations_per_epoch
+        self.log_every_step = log_every_step
 
         self.z = torch.randn(len(test_dataloader), self.model.latent_dim)
         self.fid_metric = FID()
@@ -62,6 +64,9 @@ class Trainer:
             self.optimizer.step()
             self.lr_scheduler.step()
 
+            if (batch_idx + 1) % self.log_every_step == 0:
+                self.writer.log_image(make_train_img(batch["img"], batch["target"]))
+
             if batch_idx == self.iterations_per_epoch:
                 break
 
@@ -86,7 +91,7 @@ class Trainer:
         constructed_imgs = torch.stack(constructed_imgs)
 
         self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
-        self.writer.log_image(show)
+        self.writer.log_image(make_test_img(constructed_imgs, torch.cat(targets)))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")

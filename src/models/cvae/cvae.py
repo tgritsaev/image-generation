@@ -113,10 +113,11 @@ class ConditionalVAE(BaseModel):
         return loss
 
     def sample(self, num_samples: int, target: Tensor, z=None) -> Tensor:
+        y = F.one_hot(target, self.num_classes).float()
         if z is None:
             z = torch.randn(num_samples, self.latent_dim)
         z = z.to(target.device)
 
-        z = torch.cat([z, target.float()], dim=1)
+        z = torch.cat([z, y], dim=1)
         samples = self.decode(z)
         return samples
