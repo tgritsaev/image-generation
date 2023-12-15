@@ -27,7 +27,7 @@ class Trainer:
         device: torch.device,
         epochs: int,
         iterations_per_epoch: int,
-        log_every_step: int = 1,
+        log_every_step: int = 100,
     ):
         self.model = model
         self.train_inf_dataloader = train_inf_dataloader
@@ -66,7 +66,7 @@ class Trainer:
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                self.writer.log_image("train", make_train_image(batch["img"].detach().cpu().numpy()))
+                self.writer.log_image("train", make_train_image(batch["pred"].detach().cpu().numpy()))
 
             if batch_idx == self.iterations_per_epoch:
                 break

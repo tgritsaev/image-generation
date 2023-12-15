@@ -12,9 +12,9 @@ def inf_loop(data_loader):
 
 def make_train_image(samples: np.array, n: int = 10):
     _, h, w, c = samples.shape
-    mega_image = np.zeros((h, w * n, c))
+    mega_image = np.zeros((h, w, c))
     for i in range(n):
-        mega_image[0:h, w * i : w * (i + 1), :] = samples[i]
+        mega_image[i * h : (i + 1) * h, 0:w, :] = samples[i]
     return mega_image.transpose(1, 2, 0)
 
 
@@ -27,7 +27,7 @@ def make_test_image(samples: np.array, targets: np.array, n: int = 3, target_cnt
             for idx in range(len(used)):
                 if targets[idx] == t and used[idx] == 0:
                     used[idx] = 1
-                    mega_image[h * i : h * (i + 1), w * t : w * (t + 1), :] = samples[idx]
+                    mega_image[h * t : h * (t + 1), w * i : w * (i + 1), :] = samples[idx]
                     break
     return mega_image.transpose(1, 2, 0)
 
