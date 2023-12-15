@@ -27,7 +27,7 @@ class Trainer:
         device: torch.device,
         epochs: int,
         iterations_per_epoch: int,
-        log_every_step: int = 1,
+        log_every_step: int = 100,
     ):
         self.model = model
         self.train_inf_dataloader = train_inf_dataloader
@@ -92,7 +92,7 @@ class Trainer:
         real_imgs = torch.from_numpy(np.stack(real_imgs))
         constructed_imgs = torch.from_numpy(np.stack(constructed_imgs))
 
-        self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
+        # self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
         self.writer.log_image("test", make_test_image(constructed_imgs, np.cat(targets)))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):

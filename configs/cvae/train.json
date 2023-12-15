@@ -41,7 +41,7 @@
     "lr_scheduler": {
         "linear_warmup": {
             "max_lr": 1e-3,
-            "warmup_iters": 1000
+            "warmup_iters": 2500
         },
         "exponential": {
             "gamma": 0.9996
@@ -49,7 +49,7 @@
     },
     "trainer": {
         "epochs": 10,
-        "iterations_per_epoch": 10
+        "iterations_per_epoch": 2500
     },
     "wandb": {
         "project": "dl2-generation"
