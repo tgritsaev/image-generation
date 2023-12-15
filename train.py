@@ -27,7 +27,6 @@ def main(args):
             config["wandb"]["project"] = args.wandb_run_name
         writer = WandbWriter(**config["wandb"])
     else:
-        print(args.wandb)
         writer = LocalWriter()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
