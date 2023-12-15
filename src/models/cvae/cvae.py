@@ -11,7 +11,7 @@ from src.models.base_model import BaseModel
 class ConditionalVAE(BaseModel):
     def __init__(
         self,
-        in_channels: int,
+        n_channels: int,
         num_classes: int,
         latent_dim: int,
         img_size: int,
@@ -24,12 +24,12 @@ class ConditionalVAE(BaseModel):
         self.img_size = img_size
 
         self.embed_class = nn.Linear(num_classes, img_size * img_size)
-        self.embed_data = nn.Conv2d(in_channels, in_channels, kernel_size=1)
+        self.embed_data = nn.Conv2d(n_channels, in_channels, kernel_size=1)
 
         if hidden_dims is None:
             hidden_dims = [16, 32, 64, 128, 256, 512, 1024]
 
-        in_channels += 1  # +1 for target label
+        in_channels = n_channels + 1  # +1 for target label
         # Encoder
         modules = []
         for h_dim in hidden_dims:
@@ -64,7 +64,7 @@ class ConditionalVAE(BaseModel):
             nn.ConvTranspose2d(hidden_dims[-1], hidden_dims[-1], kernel_size=3, stride=2, padding=1, output_padding=1),
             nn.BatchNorm2d(hidden_dims[-1]),
             nn.LeakyReLU(),
-            nn.Conv2d(hidden_dims[-1], out_channels=in_channels, kernel_size=3, padding=1),
+            nn.Conv2d(hidden_dims[-1], out_channels=n_channels, kernel_size=3, padding=1),
             nn.Tanh(),
         )
 
