@@ -41,7 +41,6 @@
     },
     "lr_scheduler": {
         "linear_warmup": {
-            "max_lr": 1e-3,
             "warmup_iters": 2500
         },
         "exponential": {
