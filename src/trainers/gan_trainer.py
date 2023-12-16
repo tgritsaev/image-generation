@@ -47,8 +47,8 @@ class GANTrainer:
         self.log_every_step = log_every_step
 
         self.criterion = nn.BCELoss()
-        self.fid_metric = FID()
-        self.ssim_metric = SSIMLoss(data_range=255.0)
+        self.fid_metric = FID().to(self.device)
+        self.ssim_metric = SSIMLoss(data_range=255.0).to(self.device)
 
         self.img_size = config["generator"]["args"]["image_sz"]
         self.fixed_noize = torch.randn(len(test_dataloader), config["generator"]["args"]["hidden_dim"], device=self.device)
@@ -135,8 +135,8 @@ class GANTrainer:
                 bs = batch["img"].shape[0]
                 samples = self.g_model(self.fixed_noize[:, last_idx : last_idx + bs].unsqueeze(-1).unsqueeze(-1))
 
-                real_imgs.append(batch["img"].detach().cpu())
-                constructed_imgs.append(samples.detach().cpu())
+                real_imgs.append(batch["img"].detach())
+                constructed_imgs.append(samples.detach())
 
         real_imgs = torch.cat(real_imgs)
         constructed_imgs = torch.cat(constructed_imgs)
