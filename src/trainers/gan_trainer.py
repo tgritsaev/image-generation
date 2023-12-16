@@ -50,7 +50,7 @@ class GANTrainer:
         self.fid_metric = FID().to(self.device)
         self.ssim_metric = SSIMLoss(data_range=255.0).to(self.device)
 
-        self.fixed_noize = torch.randn(len(test_dataloader), config["generator"]["args"]["latent_dim"], device=self.device)
+        self.fixed_noise = torch.randn(len(test_dataloader), config["generator"]["args"]["latent_dim"], device=self.device)
 
     def move_batch_to_device(self, batch):
         for key in ["img"]:
@@ -77,7 +77,7 @@ class GANTrainer:
 
             ## Train with all-fake batch
             # Generate batch of latent vectors
-            noise = torch.randn(b_size, self.img_size, 1, 1, device=self.device)
+            noise = torch.randn(b_size, 64, 1, 1, device=self.device)
             # Generate fake image batch with G
             fake = self.g_model(noise)
             label.fill_(fake_label)
@@ -133,8 +133,8 @@ class GANTrainer:
                 self.move_batch_to_device(batch)
                 bs = batch["img"].shape[0]
                 print("??", bs, last_idx, last_idx + bs)
-                print("??", self.fixed_noize[:, last_idx : last_idx + bs].unsqueeze(-1).unsqueeze(-1).shape)
-                samples = self.g_model(self.fixed_noize[:, last_idx : last_idx + bs].unsqueeze(-1).unsqueeze(-1))
+                print("??", self.fixed_noise[:, last_idx : last_idx + bs].unsqueeze(-1).unsqueeze(-1).shape)
+                samples = self.g_model(self.fixed_noise[:, last_idx : last_idx + bs].unsqueeze(-1).unsqueeze(-1))
 
                 real_imgs.append(batch["img"].detach())
                 constructed_imgs.append(samples.detach())
