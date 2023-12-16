@@ -25,8 +25,8 @@ class GANTrainer:
         device: torch.device,
         epochs: int,
         iterations_per_epoch: int,
-        log_every_step: int = 1,
         config,
+        log_every_step: int = 1,
     ):
         self.g_model = g_model
         self.d_model = d_model
@@ -49,8 +49,9 @@ class GANTrainer:
         self.criterion = nn.BCELoss()
         self.fid_metric = FID()
         self.fid_metric = SSIMLoss(data_range=255.0)
-        
+
         self.img_size = config["generator"]["args"]["image_sz"]
+        self.fixed_noize = torch.randn(len(test_dataloader), config["generator"]["args"]["hidden_dim"])
 
     def move_batch_to_device(self, batch):
         for key in ["img"]:
@@ -121,21 +122,20 @@ class GANTrainer:
         last_idx = 0
         real_imgs = []
         constructed_imgs = []
-        targets = []
         with torch.no_grad():
             for batch in tqdm(self.test_dataloader):
                 self.move_batch_to_device(batch)
-                samples = self.model.sample(bs, batch["target"], z=self.z[last_idx : last_idx + bs, ...])
+                bs = batch["img"].shape[0]
+                samples = self.g_model(batch["img"][:, last_idx : last_idx + bs].unsqueeze(-1).unsqueeze(-1))
 
                 real_imgs.append(batch["img"].detach().cpu().numpy())
                 constructed_imgs.append(samples.detach().cpu().numpy())
-                targets.append(batch["target"])
 
         real_imgs = np.stack(real_imgs)
         constructed_imgs = np.stack(constructed_imgs)
 
         self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("test", make_test_image(constructed_imgs, np.cat(targets)))
+        self.writer.log_image("test", make_train_image(constructed_imgs))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")

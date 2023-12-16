@@ -115,6 +115,7 @@ def gan_training_pipeline(args, config):
         save_dir,
         device,
         **config["trainer"],
+        config,
     )
 
     trainer.train()
