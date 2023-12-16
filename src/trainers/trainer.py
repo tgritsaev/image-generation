@@ -9,11 +9,6 @@ from piq import FID, SSIMLoss
 from src.utils.utils import make_train_image, make_test_image
 
 
-def move_batch_to_device(batch, device):
-    for key in ["img", "target"]:
-        batch[key] = batch[key].to(device)
-
-
 class Trainer:
     def __init__(
         self,
@@ -45,13 +40,17 @@ class Trainer:
         self.fid_metric = FID()
         self.ssim_metric = SSIMLoss(data_range=255.0)
 
+    def move_batch_to_device(self, batch):
+        for key in ["img", "target"]:
+            batch[key] = batch[key].to(self.device)
+
     def train_epoch(self):
         self.model.train()
         sum_loss = 0
         for batch_idx, batch in tqdm(enumerate(self.train_inf_dataloader)):
             self.optimizer.zero_grad()
 
-            move_batch_to_device(batch, self.device)
+            self.move_batch_to_device(batch)
             output = self.model.train_batch(**batch)
             # model.train, because diffusion training pipeline differs from VAE training pipeline
             batch.update(output)
@@ -81,7 +80,7 @@ class Trainer:
         targets = []
         with torch.no_grad():
             for batch in tqdm(self.test_dataloader):
-                move_batch_to_device(batch, self.device)
+                self.move_batch_to_device(batch)
                 bs = batch["target"].shape[0]
                 samples = self.model.sample(bs, batch["target"], z=self.z[last_idx : last_idx + bs, ...])
 
@@ -93,7 +92,7 @@ class Trainer:
         constructed_imgs = torch.from_numpy(np.concatenate(constructed_imgs))
 
         # self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("test", make_test_image(constructed_imgs, np.concatenate(targets)))
+        self.writer.log_image("test", make_train_image(constructed_imgs, np.concatenate(targets)))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")

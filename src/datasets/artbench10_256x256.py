@@ -23,8 +23,6 @@ def read_dir(path):
     img_path = []
     target = []
     for t, subdir in enumerate(DIRS):
-        if subdir[0] == ".":
-            break
         for img_name in os.listdir(f"{path}/{subdir}"):
             img_path.append(f"{path}/{subdir}/{img_name}")
             target.append(t)

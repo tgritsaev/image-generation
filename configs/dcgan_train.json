@@ -1,19 +1,25 @@
 {
     "generator": {
         "type": "Generator",
-        "args": {}
+        "args": {
+            "image_sz": 64,
+            "hidden_dim": 64,
+            "n_channels": 3
+        }
     },
     "discriminator": {
         "type": "Discriminator",
-        "args": {}
+        "args": {
+            "n_channels": 3,
+            "hidden_dim": 64
+        }
     },
     "data": { 
         "train": {
-            "type": "ArtBench10_256x256",
+            "type": "CatsFaces",
             "dataset_args": {
                 "root": "/kaggle/input/real-ai-art/Real_AI_SD_LD_Dataset",
                 "train": true
-
             },
             "dataloader_args": {
                 "batch_size": 16,
@@ -25,7 +31,8 @@
             "type": "ArtBench10_256x256",
             "dataset_args": {
                 "root": "/kaggle/input/real-ai-art/Real_AI_SD_LD_Dataset",
-                "train": false
+                "train": false,
+                "limit": 2500
             },
             "dataloader_args": {
                 "batch_size": 20,
@@ -34,23 +41,27 @@
             }
         }
     },
-    "optimizer": {
-        "weight_decay": 1e-5
+    "generator_optimizer": {
+        "lr": 2e-4,
+        "betas": [0.5, 0.999],
+        "weight_decay": 1e-4
     },
-    "lr_scheduler": {
-        "linear_warmup": {
-            "max_lr": 1e-3,
-            "warmup_iters": 1000
-        },
-        "exponential": {
-            "gamma": 0.9996
-        }
+    "discriminator_optimizer": {
+        "lr": 2e-4,
+        "betas": [0.5, 0.999],
+        "weight_decay": 1e-4
+    },
+    "generator_lr_scheduler": {
+        "gamma": 0.999975
+    },
+    "discriminator_lr_scheduler": {
+        "gamma": 0.999975
     },
     "trainer": {
         "epochs": 10,
         "iterations_per_epoch": 10
     },
     "wandb": {
-        "project": "dl2-generation"
+        "project": "dl2-gan-generation"
     }
 }

@@ -9,31 +9,36 @@ from piq import FID, SSIMLoss
 from src.utils.utils import make_train_image, make_test_image
 
 
-def move_batch_to_device(batch, device):
-    for key in ["img", "target"]:
-        batch[key] = batch[key].to(device)
-
-
-class Trainer:
+class GANTrainer:
     def __init__(
         self,
-        model,
+        g_model,
+        d_model,
         train_inf_dataloader,
         test_dataloader,
-        optimizer: torch.optim.Optimizer,
-        lr_scheduler: torch.optim.lr_scheduler.LRScheduler,
+        g_optimizer: torch.optim.Optimizer,
+        d_optimizer: torch.optim.Optimizer,
+        g_lr_scheduler: torch.optim.lr_scheduler.LRScheduler,
+        d_lr_scheduler: torch.optim.lr_scheduler.LRScheduler,
         writer,
         save_dir: str,
         device: torch.device,
         epochs: int,
         iterations_per_epoch: int,
         log_every_step: int = 1,
+        config,
     ):
-        self.model = model
+        self.g_model = g_model
+        self.d_model = d_model
+
         self.train_inf_dataloader = train_inf_dataloader
         self.test_dataloader = test_dataloader
-        self.optimizer = optimizer
-        self.lr_scheduler = lr_scheduler
+
+        self.g_optimizer = g_optimizer
+        self.d_optimizer = d_optimizer
+        self.g_lr_scheduler = g_lr_scheduler
+        self.d_lr_scheduler = d_lr_scheduler
+
         self.writer = writer
         self.save_dir = save_dir
         self.device = device
@@ -41,59 +46,67 @@ class Trainer:
         self.iterations_per_epoch = iterations_per_epoch
         self.log_every_step = log_every_step
 
-        self.z = torch.randn(len(test_dataloader), self.model.latent_dim)
+        self.criterion = nn.BCELoss()
         self.fid_metric = FID()
         self.fid_metric = SSIMLoss(data_range=255.0)
+        
+        self.img_size = config["generator"]["args"]["image_sz"]
+
+    def move_batch_to_device(self, batch):
+        for key in ["img"]:
+            batch[key] = batch[key].to(self.device)
 
     def train_epoch(self):
         self.model.train()
+        fake_label, real_label = 0, 1
         sum_loss = 0
+        # https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
         for batch_idx, batch in tqdm(enumerate(self.train_inf_dataloader)):
-            disc_model.zero_grad()
+            self.d_model.zero_grad()
             # Format batch
-            real_cpu = data[0].to(device)
-            b_size = real_cpu.size(0)
-            label = torch.full((b_size,), real_label, dtype=torch.float, device=device)
+            self.move_batch_to_device(batch)
+            b_size = batch["img"].size(0)
+            label = torch.full((b_size,), real_label, dtype=torch.float, device=self.device)
             # Forward pass real batch through D
-            output = disc_model(real_cpu).view(-1)
+            output = self.d_model(batch["img"]).view(-1)
             # Calculate loss on all-real batch
-            errD_real = criterion(output, label)
+            errD_real = self.criterion(output, label)
             # Calculate gradients for D in backward pass
             errD_real.backward()
             D_x = output.mean().item()
 
             ## Train with all-fake batch
             # Generate batch of latent vectors
-            noise = torch.randn(b_size, nz, 1, 1, device=device)
+            noise = torch.randn(b_size, self.img_size, 1, 1, device=self.device)
             # Generate fake image batch with G
-            fake = gen_model(noise)
+            fake = self.g_model(noise)
             label.fill_(fake_label)
             # Classify all fake batch with D
-            output = disc_model(fake.detach()).view(-1)
+            output = self.d_model(fake.detach()).view(-1)
             # Calculate D's loss on the all-fake batch
-            errD_fake = criterion(output, label)
+            errD_fake = self.criterion(output, label)
             # Calculate the gradients for this batch, accumulated (summed) with previous gradients
             errD_fake.backward()
             D_G_z1 = output.mean().item()
             # Compute error of D as sum over the fake and the real batches
             errD = errD_real + errD_fake
             # Update D
-            optimizerD.step()
+            self.d_optimizer.step()
 
             ############################
             # (2) Update G network: maximize log(D(G(z)))
             ###########################
-            gen_model.zero_grad()
+            self.g_model.zero_grad()
             label.fill_(real_label)  # fake labels are real for generator cost
             # Since we just updated D, perform another forward pass of all-fake batch through D
-            output = disc_model(fake).view(-1)
+            output = self.d_model(fake).view(-1)
             # Calculate G's loss based on this output
-            errG = criterion(output, label)
+            errG = self.criterion(output, label)
             # Calculate gradients for G
             errG.backward()
             D_G_z2 = output.mean().item()
             # Update G
-            optimizerG.step()
+            self.g_optimizer.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
                 self.writer.log_image("train", make_train_image(batch["img"].detach().cpu().numpy()))
@@ -111,8 +124,7 @@ class Trainer:
         targets = []
         with torch.no_grad():
             for batch in tqdm(self.test_dataloader):
-                move_batch_to_device(batch, self.device)
-                bs = batch["target"].shape[0]
+                self.move_batch_to_device(batch)
                 samples = self.model.sample(bs, batch["target"], z=self.z[last_idx : last_idx + bs, ...])
 
                 real_imgs.append(batch["img"].detach().cpu().numpy())
