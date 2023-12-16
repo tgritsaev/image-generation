@@ -23,7 +23,7 @@
                 "limit": 14000
             },
             "dataloader_args": {
-                "batch_size": 64,
+                "batch_size": 128,
                 "num_workers": 1,
                 "shuffle": true
             }
@@ -36,7 +36,7 @@
                 "limit": 1024
             },
             "dataloader_args": {
-                "batch_size": 64,
+                "batch_size": 128,
                 "num_workers": 1,
                 "shuffle": false
             }
@@ -45,24 +45,24 @@
     "generator_optimizer": {
         "lr": 2e-4,
         "betas": [0.5, 0.999],
-        "weight_decay": 1e-4
+        "weight_decay": 1e-6
     },
     "discriminator_optimizer": {
         "lr": 2e-4,
         "betas": [0.5, 0.999],
-        "weight_decay": 1e-4
+        "weight_decay": 1e-6
     },
     "generator_lr_scheduler": {
-        "gamma": 0.999977
+        "gamma": 0.9999977
     },
     "discriminator_lr_scheduler": {
-        "gamma": 0.999977
+        "gamma": 0.9999977
     },
     "trainer": {
         "epochs": 100,
-        "iterations_per_epoch": 1000,
+        "iterations_per_epoch": 1,
         "save_period": 5,
-        "log_every_step": 100
+        "log_every_step": 1
     },
     "wandb": {
         "project": "dl2-gan-generation"
