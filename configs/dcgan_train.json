@@ -18,11 +18,12 @@
         "train": {
             "type": "CatsFaces",
             "dataset_args": {
-                "root": "/kaggle/input/real-ai-art/Real_AI_SD_LD_Dataset",
-                "train": true
+                "root": "/kaggle/input/cats-faces-64x64-for-generative-models/cats",
+                "train": true,
+                "limit": 14000
             },
             "dataloader_args": {
-                "batch_size": 16,
+                "batch_size": 64,
                 "num_workers": 1,
                 "shuffle": true
             }
@@ -30,12 +31,12 @@
         "test": {
             "type": "ArtBench10_256x256",
             "dataset_args": {
-                "root": "/kaggle/input/real-ai-art/Real_AI_SD_LD_Dataset",
+                "root": "/kaggle/input/cats-faces-64x64-for-generative-models/cats",
                 "train": false,
-                "limit": 2500
+                "limit": 1000
             },
             "dataloader_args": {
-                "batch_size": 20,
+                "batch_size": 64,
                 "num_workers": 1,
                 "shuffle": false
             }

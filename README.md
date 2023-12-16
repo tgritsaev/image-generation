@@ -38,7 +38,7 @@ See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week
 ```shell
 pip3 install -r requirements.txt
 ```
-2. The dataset I use is [ArtBench](https://paperswithcode.com/dataset/artbench-10). Download the 256x256 version here: [ArtBench-10 on GitHub](https://github.com/liaopeiyuan/artbench/blob/main/README.md). Download the 32x32 version by the previous link or from the [Kaggle (only 32x32)](https://www.kaggle.com/datasets/alexanderliao/artbench10), the extended version [Kaggle (256x256 + AI gen)](https://www.kaggle.com/datasets/ravidussilva/real-ai-art). 
+2. The dataset I use is [ArtBench](https://paperswithcode.com/dataset/artbench-10). Download the 256x256 version here: [ArtBench-10 on GitHub](https://github.com/liaopeiyuan/artbench/blob/main/README.md). Download the 32x32 version by the previous link or from the [Kaggle (only 32x32)](https://www.kaggle.com/datasets/alexanderliao/artbench10), the extended version [Kaggle (256x256 + AI gen)](https://www.kaggle.com/datasets/ravidussilva/real-ai-art). https://www.kaggle.com/datasets/spandan2/cats-faces-64x64-for-generative-models
 3. Download my VAE checkpoint from the [google drive](TODO).
 
 
