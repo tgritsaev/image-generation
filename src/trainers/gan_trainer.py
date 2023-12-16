@@ -149,7 +149,7 @@ class GANTrainer:
         self.writer.log(
             {
                 "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)).cpu().numpy(),
-                "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
+                "test_SSIM": self.ssim_metric((real_imgs - 0.5) * 2, (constructed_imgs - 0.5) * 2).item(),
                 "test": wandb.Image(make_mega_image(constructed_imgs.cpu().numpy(), 8)),
             },
             False,
