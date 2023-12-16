@@ -44,19 +44,19 @@
     },
     "generator_optimizer": {
         "lr": 2e-4,
-        "betas": [0.5, 0.999],
+        "betas": [0.7, 0.999],
         "weight_decay": 0
     },
     "discriminator_optimizer": {
         "lr": 2e-4,
-        "betas": [0.5, 0.999],
+        "betas": [0.7, 0.999],
         "weight_decay": 0
     },
     "generator_lr_scheduler": {
-        "gamma": 0.9999977
+        "gamma": 0.999977
     },
     "discriminator_lr_scheduler": {
-        "gamma": 0.9999977
+        "gamma": 0.999977
     },
     "trainer": {
         "epochs": 100,
