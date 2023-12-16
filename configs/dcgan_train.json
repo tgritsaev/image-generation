@@ -2,7 +2,7 @@
     "generator": {
         "type": "Generator",
         "args": {
-            "image_sz": 64,
+            "latent_dim": 100,
             "hidden_dim": 64,
             "n_channels": 3
         }

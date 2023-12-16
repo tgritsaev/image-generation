@@ -11,12 +11,12 @@ def weights_init(m):
 
 
 class Generator(nn.Module):
-    def __init__(self, image_sz, hidden_dim, n_channels):
+    def __init__(self, latent_dim, hidden_dim, n_channels):
         super().__init__()
 
         self.layers = nn.Sequential(
             # input is Z, going into a convolution
-            nn.ConvTranspose2d(image_sz, hidden_dim * 8, 4, 1, 0, bias=False),
+            nn.ConvTranspose2d(latent_dim, hidden_dim * 8, 4, 1, 0, bias=False),
             nn.BatchNorm2d(hidden_dim * 8),
             nn.ReLU(True),
             # state size. ``(hidden_dim * 8) x 4 x 4``

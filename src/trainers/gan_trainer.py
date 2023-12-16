@@ -51,7 +51,7 @@ class GANTrainer:
         self.ssim_metric = SSIMLoss(data_range=255.0).to(self.device)
 
         self.img_size = config["generator"]["args"]["image_sz"]
-        self.fixed_noize = torch.randn(len(test_dataloader), config["generator"]["args"]["hidden_dim"], device=self.device)
+        self.fixed_noize = torch.randn(len(test_dataloader), config["generator"]["args"]["latent_dim"], device=self.device)
 
     def move_batch_to_device(self, batch):
         for key in ["img"]:
