@@ -33,7 +33,7 @@
             "dataset_args": {
                 "root": "/kaggle/input/cats-faces-64x64-for-generative-models/cats",
                 "train": false,
-                "limit": 1024
+                "limit": 256
             },
             "dataloader_args": {
                 "batch_size": 64,
