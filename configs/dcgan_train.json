@@ -60,8 +60,9 @@
     },
     "trainer": {
         "epochs": 100,
+        "iterations_per_epoch": 2,
         "save_period": 5,
-        "iterations_per_epoch": 2000
+        "log_every_step": 1
     },
     "wandb": {
         "project": "dl2-gan-generation"
