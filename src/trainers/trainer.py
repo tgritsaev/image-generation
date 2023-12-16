@@ -84,15 +84,15 @@ class Trainer:
                 bs = batch["target"].shape[0]
                 samples = self.model.sample(bs, batch["target"], z=self.z[last_idx : last_idx + bs, ...])
 
-                real_imgs.append(batch["img"].detach().cpu().numpy())
-                constructed_imgs.append(samples.detach().cpu().numpy())
+                real_imgs.append(batch["img"].detach().cpu())
+                constructed_imgs.append(samples.detach().cpu())
                 targets.append(batch["target"].detach().cpu().numpy())
 
         real_imgs = torch.stack(real_imgs)
         constructed_imgs = torch.stack(constructed_imgs)
 
         self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("test", make_train_image(constructed_imgs.numpy()))
+        self.writer.log_image("test", make_test_image(constructed_imgs.numpy(), targets))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")

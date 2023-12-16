@@ -135,8 +135,8 @@ class GANTrainer:
                 bs = batch["img"].shape[0]
                 samples = self.g_model(self.fixed_noize[:, last_idx : last_idx + bs].unsqueeze(-1).unsqueeze(-1))
 
-                real_imgs.append(batch["img"].detach().cpu().numpy())
-                constructed_imgs.append(samples.detach().cpu().numpy())
+                real_imgs.append(batch["img"].detach().cpu())
+                constructed_imgs.append(samples.detach().cpu())
 
         real_imgs = torch.stack(real_imgs)
         constructed_imgs = torch.stack(constructed_imgs)
