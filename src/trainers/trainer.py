@@ -85,7 +85,7 @@ class Trainer:
                 samples = self.model.sample(bs, batch["target"], z=self.fixed_noise[last_idx : last_idx + bs, ...])
 
                 real_imgs.append(batch["img"].detach().cpu())
-                constructed_imgs.append(samples.detach().cpu())
+                constructed_imgs.append(torch.clamp(samples.detach(), 0, 255))
                 targets.append(batch["target"].detach().cpu().numpy())
 
         real_imgs = torch.cat(real_imgs)

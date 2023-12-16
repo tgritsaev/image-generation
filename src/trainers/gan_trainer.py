@@ -132,12 +132,11 @@ class GANTrainer:
         with torch.no_grad():
             for batch in tqdm(self.test_dataloader):
                 self.move_batch_to_device(batch)
-                print(batch["img"].min(), batch["img"].max())
                 bs = batch["img"].shape[0]
                 samples = self.g_model(self.fixed_noise[last_idx : last_idx + bs, ...].unsqueeze(-1).unsqueeze(-1))
 
                 real_imgs.append(batch["img"].detach())
-                constructed_imgs.append(samples.detach())
+                constructed_imgs.append(torch.clamp(samples.detach(), 0, 255))
                 last_idx += bs
 
         real_imgs = torch.cat(real_imgs)
