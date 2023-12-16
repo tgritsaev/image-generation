@@ -91,7 +91,7 @@ class GANTrainer:
             D_G_z1 = output.mean().item()
             # Compute error of D as sum over the fake and the real batches
             d_loss = d_real_loss + d_fake_loss
-            self.writer.log({"train_d_loss": d_loss.step()})
+            log_wandb = {"train_d_loss": d_loss.item()}
             # Update D
             self.d_optimizer.step()
 
@@ -106,11 +106,12 @@ class GANTrainer:
             g_loss = self.criterion(output, label)
             # Calculate gradients for G
             g_loss.backward()
-            self.writer.log({"train_g_loss": g_loss.step()})
+            log_wandb.update({"train_g_loss": g_loss.item()})
             D_G_z2 = output.mean().item()
             # Update G
             self.g_optimizer.step()
 
+            self.writer.log(log_wandb)
             if (batch_idx + 1) % self.log_every_step == 0:
                 self.writer.log_image("train", make_train_image(fake.detach().cpu().numpy()))
 
