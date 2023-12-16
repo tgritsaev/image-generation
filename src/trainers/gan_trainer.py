@@ -51,7 +51,7 @@ class GANTrainer:
         self.ssim_metric = SSIMLoss(data_range=255.0).to(self.device)
 
         self.latent_dim = config["generator"]["args"]["latent_dim"]
-        self.fixed_noise = torch.randn(len(test_dataloader), self.latent_dim, device=self.device)
+        self.fixed_noise = torch.randn(len(test_dataloader) * test_dataloader.batch_size, self.latent_dim, device=self.device)
 
     def move_batch_to_device(self, batch):
         for key in ["img"]:
@@ -132,6 +132,7 @@ class GANTrainer:
         with torch.no_grad():
             for batch in tqdm(self.test_dataloader):
                 self.move_batch_to_device(batch)
+
                 bs = batch["img"].shape[0]
                 print("??", bs, last_idx, last_idx + bs)
                 print("??", self.fixed_noise[last_idx : last_idx + bs, ...].unsqueeze(-1).unsqueeze(-1).shape)
@@ -140,6 +141,7 @@ class GANTrainer:
                 real_imgs.append(batch["img"].detach())
                 constructed_imgs.append(samples.detach())
                 print("!", real_imgs[-1].shape, constructed_imgs[-1].shape)
+                last_idx += bs
 
         real_imgs = torch.cat(real_imgs)
         constructed_imgs = torch.cat(constructed_imgs)

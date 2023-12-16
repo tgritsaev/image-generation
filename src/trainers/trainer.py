@@ -36,7 +36,7 @@ class Trainer:
         self.iterations_per_epoch = iterations_per_epoch
         self.log_every_step = log_every_step
 
-        self.z = torch.randn(len(test_dataloader), self.model.latent_dim)
+        self.fixed_noise = torch.randn(len(test_dataloader) * test_dataloader.batch_size, self.latent_dim, device=self.device)
         self.fid_metric = FID()
         self.ssim_metric = SSIMLoss(data_range=255.0)
 
@@ -82,7 +82,7 @@ class Trainer:
             for batch in tqdm(self.test_dataloader):
                 self.move_batch_to_device(batch)
                 bs = batch["target"].shape[0]
-                samples = self.model.sample(bs, batch["target"], z=self.z[last_idx : last_idx + bs, ...])
+                samples = self.model.sample(bs, batch["target"], z=self.fixed_noise[last_idx : last_idx + bs, ...])
 
                 real_imgs.append(batch["img"].detach().cpu())
                 constructed_imgs.append(samples.detach().cpu())
