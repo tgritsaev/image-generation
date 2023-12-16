@@ -133,11 +133,12 @@ class GANTrainer:
                 real_imgs.append(batch["img"].detach().cpu().numpy())
                 constructed_imgs.append(samples.detach().cpu().numpy())
 
-        real_imgs = np.stack(real_imgs)
-        constructed_imgs = np.stack(constructed_imgs)
+        real_imgs = torch.stack(real_imgs)
+        constructed_imgs = torch.stack(constructed_imgs)
+        print("!!!!!", real_imgs.shape)
 
         self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("test", make_train_image(constructed_imgs))
+        self.writer.log_image("test", make_train_image(constructed_imgs.numpy()))
 
     def log_after_training_epoch(self, epoch):
         print(16 * "-")

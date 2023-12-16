@@ -88,11 +88,11 @@ class Trainer:
                 constructed_imgs.append(samples.detach().cpu().numpy())
                 targets.append(batch["target"].detach().cpu().numpy())
 
-        real_imgs = torch.from_numpy(np.concatenate(real_imgs))
-        constructed_imgs = torch.from_numpy(np.concatenate(constructed_imgs))
+        real_imgs = torch.stack(real_imgs)
+        constructed_imgs = torch.stack(constructed_imgs)
 
-        # self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("test", make_train_image(constructed_imgs, np.concatenate(targets)))
+        self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
+        self.writer.log_image("test", make_train_image(constructed_imgs.numpy()))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")
