@@ -1,6 +1,6 @@
 from tqdm import tqdm
+import wandb
 
-import numpy as np
 import torch
 import torch.nn as nn
 
@@ -118,12 +118,14 @@ class GANTrainer:
             self.g_lr_scheduler.step()
             self.d_lr_scheduler.step()
 
-            self.writer.log(log_wandb)
             if (batch_idx + 1) % self.log_every_step == 0:
-                self.writer.log_image("train", make_train_image(fake.detach().cpu().numpy(), 8))
+                log_wandb.update({"train": wandb.Image(make_train_image(fake.detach().cpu().numpy(), 8))})
+
+            self.writer(log_wandb)
 
             if batch_idx == self.iterations_per_epoch:
                 break
+        return log_wandb
 
     def test(self):
         self.g_model.eval()
@@ -147,9 +149,9 @@ class GANTrainer:
             {
                 "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)).cpu().numpy(),
                 "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
+                "test": wandb.Image(make_mega_image(constructed_imgs.cpu().numpy(), 8)),
             }
         )
-        self.writer.log_image("test", make_mega_image(constructed_imgs.cpu().numpy(), 8))
 
     def log_after_training_epoch(self, epoch):
         print(16 * "-")

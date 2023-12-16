@@ -48,12 +48,6 @@ class LocalWriter:
     def log(self, msg):
         print(f"local_wandb log: {msg}")
 
-    def log_table(self, table):
-        print(f"local_wandb table: {table}")
-
-    def log_image(self, part, img):
-        print(f"local_wandb {part}_img: {img}")
-
     def finish(self):
         pass
 
@@ -65,9 +59,6 @@ class WandbWriter:
 
     def log(self, msg):
         wandb.log(msg)
-
-    def log_image(self, part, img):
-        wandb.log({f"{part}_samples": wandb.Image(img)})
 
     def finish(self):
         wandb.finish()

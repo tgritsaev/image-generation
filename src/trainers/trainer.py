@@ -22,6 +22,7 @@ class Trainer:
         device: torch.device,
         epochs: int,
         iterations_per_epoch: int,
+        save_period: int = 1,
         log_every_step: int = 100,
     ):
         self.model = model
@@ -34,6 +35,7 @@ class Trainer:
         self.device = device
         self.epochs = epochs
         self.iterations_per_epoch = iterations_per_epoch
+        self.save_period = save_period
         self.log_every_step = log_every_step
 
         self.fixed_noise = torch.randn(len(test_dataloader.dataset), self.latent_dim, device=self.device)
@@ -121,10 +123,11 @@ class Trainer:
         """
 
         for epoch in tqdm(range(self.epochs)):
-            train_avg_loss = self.train_epoch()
-            # self.test()
+            self.train_epoch()
+            self.log_after_training_epoch(epoch)
+            self.test()
 
-            self.log_after_training_epoch(epoch, train_avg_loss)
-            self.save_state(epoch)
+            if (epoch + 1) % self.save_period == 0:
+                self.save_state(epoch)
 
         self.writer.finish()
