@@ -26,7 +26,8 @@ class GANTrainer:
         config,
         epochs: int,
         iterations_per_epoch: int,
-        log_every_step: int = 1,
+        save_period: int = 1,
+        log_every_step: int = 100,
     ):
         self.g_model = g_model
         self.d_model = d_model
@@ -44,6 +45,7 @@ class GANTrainer:
         self.device = device
         self.epochs = epochs
         self.iterations_per_epoch = iterations_per_epoch
+        self.save_period = save_period
         self.log_every_step = log_every_step
 
         self.criterion = nn.BCELoss()
@@ -177,6 +179,7 @@ class GANTrainer:
             self.log_after_training_epoch(epoch)
             self.test()
 
-            self.save_state(epoch)
+            if (epoch + 1) % self.save_period == 0:
+                self.save_state(epoch)
 
         self.writer.finish()

@@ -53,14 +53,15 @@
         "weight_decay": 1e-4
     },
     "generator_lr_scheduler": {
-        "gamma": 0.999975
+        "gamma": 0.999977
     },
     "discriminator_lr_scheduler": {
-        "gamma": 0.999975
+        "gamma": 0.999977
     },
     "trainer": {
-        "epochs": 10,
-        "iterations_per_epoch": 10
+        "epochs": 100,
+        "save_period": 5,
+        "iterations_per_epoch": 2000
     },
     "wandb": {
         "project": "dl2-gan-generation"
