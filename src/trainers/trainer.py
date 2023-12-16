@@ -91,7 +91,9 @@ class Trainer:
         real_imgs = torch.cat(real_imgs)
         constructed_imgs = torch.cat(constructed_imgs)
 
-        self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
+        self.writer.log(
+            {"test_FID": self.fid_metric.compute_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()}
+        )
         self.writer.log_image("test", make_test_image(constructed_imgs.numpy(), targets))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):

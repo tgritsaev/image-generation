@@ -6,7 +6,7 @@ import torch.nn as nn
 
 from piq import FID, SSIMLoss
 
-from src.utils.utils import make_train_image, make_test_image
+from src.utils.utils import make_train_image, make_mega_image
 
 
 class GANTrainer:
@@ -118,7 +118,7 @@ class GANTrainer:
 
             self.writer.log(log_wandb)
             if (batch_idx + 1) % self.log_every_step == 0:
-                self.writer.log_image("train", make_train_image(fake.detach().cpu().numpy()))
+                self.writer.log_image("train", make_train_image(fake.detach().cpu().numpy(), 8))
 
             if batch_idx == self.iterations_per_epoch:
                 break
@@ -140,10 +140,10 @@ class GANTrainer:
 
         real_imgs = torch.cat(real_imgs)
         constructed_imgs = torch.cat(constructed_imgs)
-        print("!!!!!", real_imgs.shape)
-
-        self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("test", make_train_image(constructed_imgs.numpy()))
+        self.writer.log(
+            {"test_FID": self.fid_metric.compute_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()}
+        )
+        self.writer.log_image("test", make_mega_image(constructed_imgs.numpy(), 8))
 
     def log_after_training_epoch(self, epoch):
         print(16 * "-")
