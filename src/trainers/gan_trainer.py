@@ -23,9 +23,9 @@ class GANTrainer:
         writer,
         save_dir: str,
         device: torch.device,
+        config,
         epochs: int,
         iterations_per_epoch: int,
-        config,
         log_every_step: int = 1,
     ):
         self.g_model = g_model

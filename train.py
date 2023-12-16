@@ -114,8 +114,8 @@ def gan_training_pipeline(args, config):
         writer,
         save_dir,
         device,
-        **config["trainer"],
         config,
+        **config["trainer"],
     )
 
     trainer.train()
