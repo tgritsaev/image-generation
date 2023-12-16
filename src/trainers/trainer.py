@@ -49,7 +49,7 @@ class Trainer:
     def train_epoch(self):
         self.model.train()
         sum_loss = 0
-        for batch_idx, batch in tqdm(enumerate(self.train_inf_dataloader)):
+        for batch_idx, batch in enumerate(self.train_inf_dataloader):
             self.optimizer.zero_grad()
 
             self.move_batch_to_device(batch)
@@ -83,7 +83,7 @@ class Trainer:
         constructed_imgs = []
         targets = []
         with torch.no_grad():
-            for batch in tqdm(self.test_dataloader):
+            for batch in self.test_dataloader:
                 self.move_batch_to_device(batch)
                 bs = batch["target"].shape[0]
                 samples = self.model.sample(bs, batch["target"], z=self.fixed_noise[last_idx : last_idx + bs, ...])

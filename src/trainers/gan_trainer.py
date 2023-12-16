@@ -65,7 +65,7 @@ class GANTrainer:
         fake_label = 0
         real_label = 1
         # https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
-        for batch_idx, batch in tqdm(enumerate(self.train_inf_dataloader)):
+        for batch_idx, batch in enumerate(self.train_inf_dataloader):
             self.d_model.zero_grad()
             # Format batch
             self.move_batch_to_device(batch)
@@ -134,7 +134,7 @@ class GANTrainer:
         real_imgs = []
         constructed_imgs = []
         with torch.no_grad():
-            for batch in tqdm(self.test_dataloader):
+            for batch in self.test_dataloader:
                 self.move_batch_to_device(batch)
                 bs = batch["img"].shape[0]
                 samples = self.g_model(self.fixed_noise[last_idx : last_idx + bs, ...].unsqueeze(-1).unsqueeze(-1))
