@@ -9,8 +9,9 @@ from torch.utils.data import DataLoader
 import src.models as model_module
 import src.datasets as datasets_module
 
-from src.collate import collate_fn
-from src.trainers.trainer import Trainer, GANTrainer
+from src.collate import collate_fn, collate_w_target_fn
+from src.trainers.trainer import Trainer
+from src.trainers.gan_trainer import GANTrainer
 from src.utils.utils import WandbWriter, LocalWriter, inf_loop
 
 
@@ -31,11 +32,11 @@ def training_pipeline(args, config):
 
     dtr_config = config["data"]["train"]
     train_dataset = getattr(datasets_module, dtr_config["type"])(**dtr_config["dataset_args"])
-    train_dataloader = inf_loop(DataLoader(train_dataset, collate_fn=collate_fn, **dtr_config["dataloader_args"]))
+    train_dataloader = inf_loop(DataLoader(train_dataset, collate_fn=collate_w_target_fn, **dtr_config["dataloader_args"]))
 
     dte_config = config["data"]["test"]
     test_dataset = getattr(datasets_module, dte_config["type"])(**dte_config["dataset_args"])
-    test_dataloader = DataLoader(test_dataset, collate_fn=collate_fn, **dte_config["dataloader_args"])
+    test_dataloader = DataLoader(test_dataset, collate_fn=collate_w_target_fn, **dte_config["dataloader_args"])
 
     model = getattr(model_module, config["model"]["type"])(**config["model"]["args"])
     model = model.to(device)
