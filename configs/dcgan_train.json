@@ -29,7 +29,7 @@
             }
         },
         "test": {
-            "type": "ArtBench10_256x256",
+            "type": "CatsFaces",
             "dataset_args": {
                 "root": "/kaggle/input/cats-faces-64x64-for-generative-models/cats",
                 "train": false,
