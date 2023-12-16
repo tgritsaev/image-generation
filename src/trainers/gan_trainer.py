@@ -137,7 +137,7 @@ class GANTrainer:
         constructed_imgs = np.stack(constructed_imgs)
 
         self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("test", make_train_image(constructed_imgs))
+        self.writer.log_image("sample", make_train_image(constructed_imgs))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")
@@ -162,9 +162,9 @@ class GANTrainer:
 
         for epoch in tqdm(range(self.epochs)):
             train_avg_loss = self.train_epoch()
+            self.log_after_training_epoch(epoch, train_avg_loss)
             self.test()
 
-            self.log_after_training_epoch(epoch, train_avg_loss)
             self.save_state(epoch)
 
         self.writer.finish()
