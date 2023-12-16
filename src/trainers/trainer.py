@@ -36,7 +36,7 @@ class Trainer:
         self.iterations_per_epoch = iterations_per_epoch
         self.log_every_step = log_every_step
 
-        self.fixed_noise = torch.randn(len(test_dataloader) * test_dataloader.batch_size, self.latent_dim, device=self.device)
+        self.fixed_noise = torch.randn(len(test_dataloader.dataset), self.latent_dim, device=self.device)
         self.fid_metric = FID()
         self.ssim_metric = SSIMLoss(data_range=255.0)
 
