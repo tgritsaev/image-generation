@@ -62,12 +62,14 @@ class Trainer:
             sum_loss += loss_item
             loss.backward()
 
-            self.writer.log({"train_loss": loss_item, "learning_rate": self.lr_scheduler.get_last_lr()[0]})
+            log_wandb = {"train_loss": loss_item, "learning_rate": self.lr_scheduler.get_last_lr()[0]}
             self.optimizer.step()
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                self.writer.log_image("train", make_train_image(batch["pred"].detach().cpu().numpy()))
+                log_wandb.update({"train": make_train_image(batch["pred"].detach().cpu().numpy())})
+
+            self.writer.log(log_wandb)
 
             if batch_idx == self.iterations_per_epoch:
                 break

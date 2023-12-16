@@ -121,11 +121,10 @@ class GANTrainer:
             if (batch_idx + 1) % self.log_every_step == 0:
                 log_wandb.update({"train": wandb.Image(make_train_image(fake.detach().cpu().numpy(), 8))})
 
-            self.writer(log_wandb)
+            self.writer.log(log_wandb)
 
             if batch_idx == self.iterations_per_epoch:
                 break
-        return log_wandb
 
     def test(self):
         self.g_model.eval()
