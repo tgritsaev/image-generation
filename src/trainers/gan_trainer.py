@@ -50,7 +50,7 @@ class GANTrainer:
 
         self.criterion = nn.BCELoss()
         self.fid_metric = FID().to(self.device)
-        self.ssim_metric = SSIMLoss(data_range=255.0).to(self.device)
+        self.ssim_metric = SSIMLoss(data_range=1.0).to(self.device)
 
         self.latent_dim = config["generator"]["args"]["latent_dim"]
         self.fixed_noise = torch.randn(len(test_dataloader.dataset), self.latent_dim, device=self.device)
@@ -147,8 +147,8 @@ class GANTrainer:
         constructed_imgs = torch.cat(constructed_imgs)
         self.writer.log(
             {
-                "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)).cpu().numpy(),
-                "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
+                "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1) / 255, constructed_imgs.flatten(1) / 255).cpu().numpy(),
+                "test_SSIM": self.ssim_metric(real_imgs / 255, constructed_imgs / 255).item(),
                 "test": wandb.Image(make_mega_image(constructed_imgs.cpu().numpy(), 8)),
             },
             False,
