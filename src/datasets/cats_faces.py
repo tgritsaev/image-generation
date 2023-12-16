@@ -2,6 +2,7 @@ import os
 
 import torch
 import torchvision
+import torchvision.transforms.functional as TF
 
 
 class CatsFaces:
@@ -16,4 +17,8 @@ class CatsFaces:
         return len(self.img_name)
 
     def __getitem__(self, index):
-        return torchvision.io.read_image(f"{self.root}/{self.img_name[index]}").to(torch.float32)
+        return TF.Normalize(
+            torchvision.io.read_image(f"{self.root}/{self.img_name[index]}").to(torch.float32),
+            (0.5, 0.5, 0.5),
+            (0.5, 0.5, 0.5),
+        )

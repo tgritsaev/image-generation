@@ -140,15 +140,16 @@ class GANTrainer:
                 samples = self.g_model(self.fixed_noise[last_idx : last_idx + bs, ...].unsqueeze(-1).unsqueeze(-1))
 
                 real_imgs.append(batch["img"].detach())
-                constructed_imgs.append(torch.clamp(samples.detach(), 0, 255))
+                constructed_imgs.append(torch.clamp(samples.detach()))
                 last_idx += bs
 
-        real_imgs = torch.cat(real_imgs)
-        constructed_imgs = torch.cat(constructed_imgs)
+        normalize = lambda imgs: (imgs - imgs.min()) / (imgs.max() - imgs.min())
+        real_imgs = normalize(torch.cat(real_imgs))
+        constructed_imgs = normalize(torch.cat(constructed_imgs))
         self.writer.log(
             {
-                "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1) / 255, constructed_imgs.flatten(1) / 255).cpu().numpy(),
-                "test_SSIM": self.ssim_metric(real_imgs / 255, constructed_imgs / 255).item(),
+                "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)).cpu().numpy(),
+                "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
                 "test": wandb.Image(make_mega_image(constructed_imgs.cpu().numpy(), 8)),
             },
             False,
