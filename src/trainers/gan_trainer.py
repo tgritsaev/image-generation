@@ -111,6 +111,11 @@ class GANTrainer:
             # Update G
             self.g_optimizer.step()
 
+            log_wandb.update({"g_learning_rate": self.g_lr_scheduler.get_last_lr()[0]})
+            log_wandb.update({"d_learning_rate": self.d_lr_scheduler.get_last_lr()[0]})
+            self.g_lr_scheduler.step()
+            self.d_lr_scheduler.step()
+
             self.writer.log(log_wandb)
             if (batch_idx + 1) % self.log_every_step == 0:
                 self.writer.log_image("train", make_train_image(fake.detach().cpu().numpy()))
