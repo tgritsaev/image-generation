@@ -151,7 +151,7 @@ class GANTrainer:
                 "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
                 "test": wandb.Image(make_mega_image(constructed_imgs.cpu().numpy(), 8)),
             },
-            (epoch + 1) * self.iterations_per_epoch,
+            False,
         )
 
     def log_after_training_epoch(self, epoch):
