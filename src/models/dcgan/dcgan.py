@@ -68,5 +68,7 @@ class Discriminator(nn.Module):
             nn.Sigmoid(),
         )
 
+        self.apply(weights_init)
+
     def forward(self, input):
         return self.layers(input)
