@@ -137,9 +137,11 @@ class GANTrainer:
 
                 real_imgs.append(batch["img"].detach())
                 constructed_imgs.append(samples.detach())
+                print("!", real_imgs[-1].shape, constructed_imgs[-1].shape)
 
         real_imgs = torch.cat(real_imgs)
         constructed_imgs = torch.cat(constructed_imgs)
+        print("!!!!!", real_imgs.shape, constructed_imgs.shape)
         self.writer.log(
             {
                 "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)),
