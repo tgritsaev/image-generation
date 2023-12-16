@@ -140,7 +140,7 @@ class GANTrainer:
                 samples = self.g_model(self.fixed_noise[last_idx : last_idx + bs, ...].unsqueeze(-1).unsqueeze(-1))
 
                 real_imgs.append(batch["img"].detach())
-                constructed_imgs.append(torch.clamp(samples.detach()))
+                constructed_imgs.append(samples.detach())
                 last_idx += bs
 
         normalize = lambda imgs: (imgs - imgs.min()) / (imgs.max() - imgs.min())
