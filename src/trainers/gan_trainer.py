@@ -126,7 +126,7 @@ class GANTrainer:
             if batch_idx == self.iterations_per_epoch:
                 break
 
-    def test(self):
+    def test(self, epoch):
         self.g_model.eval()
         self.d_model.eval()
         last_idx = 0
@@ -149,7 +149,8 @@ class GANTrainer:
                 "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)).cpu().numpy(),
                 "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
                 "test": wandb.Image(make_mega_image(constructed_imgs.cpu().numpy(), 8)),
-            }
+            },
+            (epoch + 1) * self.iterations_per_epoch,
         )
 
     def log_after_training_epoch(self, epoch):
@@ -178,7 +179,7 @@ class GANTrainer:
         for epoch in tqdm(range(self.epochs)):
             self.train_epoch()
             self.log_after_training_epoch(epoch)
-            self.test()
+            self.test(epoch)
 
             if (epoch + 1) % self.save_period == 0:
                 self.save_state(epoch)
