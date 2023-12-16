@@ -133,6 +133,7 @@ class GANTrainer:
             for batch in tqdm(self.test_dataloader):
                 self.move_batch_to_device(batch)
                 bs = batch["img"].shape[0]
+                print("??", bs, last_idx, last_idx + bs)
                 samples = self.g_model(self.fixed_noize[:, last_idx : last_idx + bs].unsqueeze(-1).unsqueeze(-1))
 
                 real_imgs.append(batch["img"].detach())
