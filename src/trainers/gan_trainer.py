@@ -138,8 +138,8 @@ class GANTrainer:
                 real_imgs.append(batch["img"].detach().cpu())
                 constructed_imgs.append(samples.detach().cpu())
 
-        real_imgs = torch.stack(real_imgs)
-        constructed_imgs = torch.stack(constructed_imgs)
+        real_imgs = torch.cat(real_imgs)
+        constructed_imgs = torch.cat(constructed_imgs)
         print("!!!!!", real_imgs.shape)
 
         self.writer.log({"test_FID": self.fid_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()})
