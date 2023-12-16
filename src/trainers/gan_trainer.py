@@ -58,7 +58,8 @@ class GANTrainer:
             batch[key] = batch[key].to(self.device)
 
     def train_epoch(self):
-        self.model.train()
+        self.g_model.train()
+        self.d_model.train()
         fake_label, real_label = 0, 1
         sum_loss = 0
         # https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
@@ -118,7 +119,8 @@ class GANTrainer:
         return sum_loss / self.iterations_per_epoch
 
     def test(self):
-        self.model.eval()
+        self.g_model.eval()
+        self.d_model.eval()
         last_idx = 0
         real_imgs = []
         constructed_imgs = []
