@@ -61,7 +61,6 @@ class GANTrainer:
         self.g_model.train()
         self.d_model.train()
         fake_label, real_label = 0, 1
-        sum_loss = 0
         # https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
         for batch_idx, batch in tqdm(enumerate(self.train_inf_dataloader)):
             self.d_model.zero_grad()
@@ -116,8 +115,6 @@ class GANTrainer:
             if batch_idx == self.iterations_per_epoch:
                 break
 
-        return sum_loss / self.iterations_per_epoch
-
     def test(self):
         self.g_model.eval()
         self.d_model.eval()
@@ -139,19 +136,21 @@ class GANTrainer:
         self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
         self.writer.log_image("sample", make_train_image(constructed_imgs))
 
-    def log_after_training_epoch(self, epoch, train_avg_loss):
+    def log_after_training_epoch(self, epoch):
         print(16 * "-")
         print(f"epoch:\t{epoch}")
-        print(f"train_avg_loss:\t{train_avg_loss:.8f}")
-        print(f"learning_rate:\t{self.lr_scheduler.get_last_lr()[0]:.8f}")
+        print(f"learning_rate:\t{self.g_lr_scheduler.get_last_lr()[0]:.8f}")
         print(16 * "-")
 
     def save_state(self, epoch):
         state = {
             "epoch": epoch,
-            "state_dict": self.model.state_dict(),
-            "optimizer": self.optimizer.state_dict(),
-            "lr_scheduler": self.lr_scheduler.state_dict(),
+            "g_state_dict": self.g_model.state_dict(),
+            "d_state_dict": self.d_model.state_dict(),
+            "g_optimizer": self.g_optimizer.state_dict(),
+            "d_optimizer": self.d_optimizer.state_dict(),
+            "g_lr_scheduler": self.g_lr_scheduler.state_dict(),
+            "d_lr_scheduler": self.d_lr_scheduler.state_dict(),
         }
         torch.save(state, f"{self.save_dir}/checkpoint-{epoch}.pth")
 
@@ -161,8 +160,8 @@ class GANTrainer:
         """
 
         for epoch in tqdm(range(self.epochs)):
-            train_avg_loss = self.train_epoch()
-            self.log_after_training_epoch(epoch, train_avg_loss)
+            self.train_epoch()
+            self.log_after_training_epoch(epoch)
             self.test()
 
             self.save_state(epoch)
