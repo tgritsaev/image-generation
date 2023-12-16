@@ -62,7 +62,8 @@ class GANTrainer:
     def train_epoch(self):
         self.g_model.train()
         self.d_model.train()
-        fake_label, real_label = 0, 1
+        fake_label = 0
+        real_label = 1
         # https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
         for batch_idx, batch in tqdm(enumerate(self.train_inf_dataloader)):
             self.d_model.zero_grad()
