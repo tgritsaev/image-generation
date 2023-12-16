@@ -71,9 +71,9 @@ class GANTrainer:
             # Forward pass real batch through D
             output = self.d_model(batch["img"]).view(-1)
             # Calculate loss on all-real batch
-            errD_real = self.criterion(output, label)
+            d_real_loss = self.criterion(output, label)
             # Calculate gradients for D in backward pass
-            errD_real.backward()
+            d_real_loss.backward()
             D_x = output.mean().item()
 
             ## Train with all-fake batch
@@ -85,12 +85,13 @@ class GANTrainer:
             # Classify all fake batch with D
             output = self.d_model(fake.detach()).view(-1)
             # Calculate D's loss on the all-fake batch
-            errD_fake = self.criterion(output, label)
+            d_fake_loss = self.criterion(output, label)
             # Calculate the gradients for this batch, accumulated (summed) with previous gradients
-            errD_fake.backward()
+            d_fake_loss.backward()
             D_G_z1 = output.mean().item()
             # Compute error of D as sum over the fake and the real batches
-            errD = errD_real + errD_fake
+            d_loss = d_real_loss + d_fake_loss
+            self.writer.log({"train_d_loss": d_loss.step()})
             # Update D
             self.d_optimizer.step()
 
@@ -102,15 +103,16 @@ class GANTrainer:
             # Since we just updated D, perform another forward pass of all-fake batch through D
             output = self.d_model(fake).view(-1)
             # Calculate G's loss based on this output
-            errG = self.criterion(output, label)
+            g_loss = self.criterion(output, label)
             # Calculate gradients for G
-            errG.backward()
+            g_loss.backward()
+            self.writer.log({"train_g_loss": g_loss.step()})
             D_G_z2 = output.mean().item()
             # Update G
             self.g_optimizer.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                self.writer.log_image("train", make_train_image(batch["img"].detach().cpu().numpy()))
+                self.writer.log_image("train", make_train_image(fake.detach().cpu().numpy()))
 
             if batch_idx == self.iterations_per_epoch:
                 break
@@ -134,7 +136,7 @@ class GANTrainer:
         constructed_imgs = np.stack(constructed_imgs)
 
         self.writer.log({"test_FID": self.fid(real_imgs, constructed_imgs), "test_SSIM": self.ssim(real_imgs, constructed_imgs).item()})
-        self.writer.log_image("sample", make_train_image(constructed_imgs))
+        self.writer.log_image("test", make_train_image(constructed_imgs))
 
     def log_after_training_epoch(self, epoch):
         print(16 * "-")
