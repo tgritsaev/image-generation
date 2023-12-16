@@ -147,7 +147,7 @@ class GANTrainer:
                 "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
             }
         )
-        self.writer.log_image("test", make_mega_image(constructed_imgs.numpy(), 8))
+        self.writer.log_image("test", make_mega_image(constructed_imgs.cpu().numpy(), 8))
 
     def log_after_training_epoch(self, epoch):
         print(16 * "-")

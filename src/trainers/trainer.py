@@ -97,7 +97,7 @@ class Trainer:
                 "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
             }
         )
-        self.writer.log_image("test", make_test_image(constructed_imgs.numpy(), targets))
+        self.writer.log_image("test", make_test_image(constructed_imgs.cpu().numpy(), targets))
 
     def log_after_training_epoch(self, epoch, train_avg_loss):
         print(16 * "-")
