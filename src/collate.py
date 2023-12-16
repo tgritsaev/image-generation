@@ -16,7 +16,6 @@ def collate_w_target_fn(batch: List[Tuple]):
 
 
 def collate_fn(batch: List[Tuple]):
-    img = [item["img"] for item in batch]
     return {
-        "img": torch.stack(img),
+        "img": torch.stack(batch),
     }
