@@ -17,7 +17,7 @@ class CatsFaces:
         return len(self.img_name)
 
     def __getitem__(self, index):
-        return TF.Normalize(
+        return TF.normalize(
             torchvision.io.read_image(f"{self.root}/{self.img_name[index]}").to(torch.float32),
             (0.5, 0.5, 0.5),
             (0.5, 0.5, 0.5),
