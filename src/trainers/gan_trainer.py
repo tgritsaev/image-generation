@@ -120,7 +120,7 @@ class GANTrainer:
             self.d_lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                log_wandb.update({"train": wandb.Image(make_train_image(fake.detach().cpu().numpy(), 8))})
+                log_wandb.update({"train": wandb.Image(make_train_image((fake.detach().cpu().numpy() + 1) * 255 / 2, 8))})
 
             self.writer.log(log_wandb)
 
