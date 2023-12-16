@@ -132,20 +132,16 @@ class GANTrainer:
         with torch.no_grad():
             for batch in tqdm(self.test_dataloader):
                 self.move_batch_to_device(batch)
-
+                print(batch["img"].min(), batch["img"].max())
                 bs = batch["img"].shape[0]
-                print("??", bs, last_idx, last_idx + bs)
-                print("??", self.fixed_noise[last_idx : last_idx + bs, ...].unsqueeze(-1).unsqueeze(-1).shape)
                 samples = self.g_model(self.fixed_noise[last_idx : last_idx + bs, ...].unsqueeze(-1).unsqueeze(-1))
 
                 real_imgs.append(batch["img"].detach())
                 constructed_imgs.append(samples.detach())
-                print("!", real_imgs[-1].shape, constructed_imgs[-1].shape)
                 last_idx += bs
 
         real_imgs = torch.cat(real_imgs)
         constructed_imgs = torch.cat(constructed_imgs)
-        print("!!!!!", real_imgs.shape, constructed_imgs.shape)
         self.writer.log(
             {
                 "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)),
