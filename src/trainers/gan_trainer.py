@@ -141,7 +141,10 @@ class GANTrainer:
         real_imgs = torch.cat(real_imgs)
         constructed_imgs = torch.cat(constructed_imgs)
         self.writer.log(
-            {"test_FID": self.fid_metric.compute_metric(real_imgs, constructed_imgs), "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item()}
+            {
+                "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)),
+                "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
+            }
         )
         self.writer.log_image("test", make_mega_image(constructed_imgs.numpy(), 8))
 
