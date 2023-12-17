@@ -53,13 +53,13 @@
         "weight_decay": 1e-6
     },
     "generator_lr_scheduler": {
-        "gamma": 0.999977
+        "gamma": 0.9999977
     },
     "discriminator_lr_scheduler": {
-        "gamma": 0.999977
+        "gamma": 0.9999977
     },
     "trainer": {
-        "epochs": 100,
+        "epochs": 200,
         "iterations_per_epoch": 1000,
         "save_period": 5,
         "log_every_step": 100
