@@ -86,6 +86,7 @@ class ConditionalVAE(BaseModel):
         for downsample in self.encoder:
             x = downsample(x)
             xs.append(x)
+            print("\n!: ", x.shape)
         latent = torch.flatten(x, start_dim=1)
         mu = self.fc_mu(latent)
         log_var = self.fc_var(latent)
