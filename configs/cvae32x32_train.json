@@ -14,7 +14,7 @@
         "train": {
             "type": "ArtBench10_256x256",
             "dataset_args": {
-                "root": "/kaggle/input/artbench10",
+                "root": "/kaggle/input/artbench10/artbench-10-python/artbench-10-batches-py",
                 "train": true
             },
             "dataloader_args": {
@@ -26,7 +26,7 @@
         "test": {
             "type": "ArtBench10_256x256",
             "dataset_args": {
-                "root": "/kaggle/input/artbench10",
+                "root": "/kaggle/input/artbench10/artbench-10-python/artbench-10-batches-py",
                 "train": false,
                 "limit": 32
             },
