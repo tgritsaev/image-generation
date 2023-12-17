@@ -69,6 +69,7 @@ class Trainer:
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
+                print("\n!!!!!!\n", batch["pred"].shape)
                 train_image = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4)
                 log_wandb.update({"train": wandb.Image(train_image)})
             self.writer.log(log_wandb)
