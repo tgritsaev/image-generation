@@ -70,7 +70,7 @@ class ConditionalVAE(BaseModel):
         self.decoder = nn.ModuleList(modules)
 
         self.head = nn.Sequential(
-            nn.ConvTranspose2d(hidden_dims[-1], hidden_dims[-1], kernel_size=3, stride=2, padding=1, output_padding=1),
+            nn.ConvTranspose2d(hidden_dims[-1] * 2, hidden_dims[-1], kernel_size=3, stride=2, padding=1, output_padding=1),
             nn.BatchNorm2d(hidden_dims[-1]),
             nn.LeakyReLU(),
             nn.Conv2d(hidden_dims[-1], out_channels=n_channels, kernel_size=3, padding=1),
@@ -101,7 +101,7 @@ class ConditionalVAE(BaseModel):
             z_wskip = torch.cat([z, xs[i]], 1)
             z = self.decoder[i](z_wskip)
         print("??", z.shape, xs[-1].shape)
-        result = self.head(z)
+        result = self.head(torch.cat([z, xs[-1]], 1))
         return result
 
     def reparameterize(self, mu: Tensor, logvar: Tensor) -> Tensor:
