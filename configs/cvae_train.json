@@ -48,7 +48,7 @@
         }
     },
     "trainer": {
-        "epochs": 100,
+        "epochs": 200,
         "iterations_per_epoch": 1000,
         "save_period": 5,
         "log_every_step": 100
