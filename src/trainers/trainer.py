@@ -97,6 +97,7 @@ class Trainer:
         real_imgs = convert_to_01(torch.cat(real_imgs))
         constructed_imgs = convert_to_01(torch.cat(constructed_imgs))
         targets = np.concatenate(targets)
+        print(targets)
 
         self.writer.log(
             {
