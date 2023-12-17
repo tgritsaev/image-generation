@@ -92,14 +92,13 @@ class ConditionalVAE(BaseModel):
 
         return xs, mu, log_var
 
-    def decode(self, z: Tensor, xs: List[Tensor]) -> Tensor:
+    def decode(self, z: Tensor) -> Tensor:
         z = self.decoder_input(z).view(z.shape[0], -1, 2, 2)
-        xs.reverse()
+        zs = []
         for i in range(len(self.decoder)):
-            z_wskip = torch.cat([z, xs[i]], 1)
-            z = self.decoder[i](z_wskip)
-        result = self.head(torch.cat([z, xs[-1]], 1))
-        return result
+            z = self.decoder[i](z)
+        result = self.head(z)
+        return (result,)
 
     def reparameterize(self, mu: Tensor, logvar: Tensor) -> Tensor:
         std = torch.exp(0.5 * logvar)
@@ -117,17 +116,28 @@ class ConditionalVAE(BaseModel):
 
         z = self.reparameterize(mu, log_var)
         z = torch.cat([z, y], dim=1)
-        return {"pred": self.decode(z, xs), "img": img, "mu": mu, "log_var": log_var}
+        pred, zs = self.decode(z)
+        return {"pred": pred, "xs": xs, "zs": zs, "img": img, "mu": mu, "log_var": log_var}
 
     def train_batch(self, **kwargs) -> List[Tensor]:
         return self.forward(**kwargs)
 
-    def loss_function(self, pred, img, mu, log_var, **kwargs) -> dict:
+    def loss_function(self, pred, xs, zs, img, mu, log_var, **kwargs) -> dict:
+        xs.reverse()
+        feature_maps_loss = 0
+        for i in range(xs):
+            print(xs[i].shape, zs[i].shape)
+            feature_maps_loss += F.mse_loss(xs[i], zs[i])
         reconstruction_loss = F.mse_loss(pred, img)
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu**2 - log_var.exp(), dim=1), dim=0)
 
         loss = reconstruction_loss + img.shape[0] * kld_loss
-        return {"loss": loss, "reconstruction_loss": reconstruction_loss, "kld": kld_loss}
+        return {
+            "loss": loss,
+            "reconstruction_loss": reconstruction_loss,
+            "kld": kld_loss,
+            "feature_maps_loss": feature_maps_loss,
+        }
 
     def sample(self, num_samples: int, target: Tensor, z=None) -> Tensor:
         y = F.one_hot(target, self.num_classes).float()
