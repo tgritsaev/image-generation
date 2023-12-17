@@ -3,6 +3,7 @@ import os
 
 import torch
 import torchvision
+import torchvision.transforms.functional as TF
 
 
 DIRS = [
@@ -44,4 +45,11 @@ class ArtBench10_256x256:
         return len(self.img_path)
 
     def __getitem__(self, index):
-        return torchvision.io.read_image(self.img_path[index]).to(torch.float32), self.target[index]
+        return (
+            TF.normalize(
+                torchvision.io.read_image(self.img_path[index]).to(torch.float32) / 255.0,
+                (0.5, 0.5, 0.5),
+                (0.5, 0.5, 0.5),
+            ),
+            self.target[index],
+        )

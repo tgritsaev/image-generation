@@ -143,9 +143,9 @@ class GANTrainer:
                 constructed_imgs.append(samples.detach())
                 last_idx += bs
 
-        normalize = lambda imgs: (imgs - imgs.min()) / (imgs.max() - imgs.min())
-        real_imgs = normalize(torch.cat(real_imgs))
-        constructed_imgs = normalize(torch.cat(constructed_imgs))
+        convert_to_01 = lambda imgs: (imgs - imgs.min()) / (imgs.max() - imgs.min())
+        real_imgs = convert_to_01(torch.cat(real_imgs))
+        constructed_imgs = convert_to_01(torch.cat(constructed_imgs))
         self.writer.log(
             {
                 "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)).cpu().numpy(),

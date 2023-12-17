@@ -26,7 +26,7 @@
             "dataset_args": {
                 "root": "/kaggle/input/real-ai-art/Real_AI_SD_LD_Dataset",
                 "train": false,
-                "limit": 2500
+                "limit": 1000
             },
             "dataloader_args": {
                 "batch_size": 20,
@@ -49,9 +49,11 @@
     },
     "trainer": {
         "epochs": 10,
-        "iterations_per_epoch": 10000
+        "iterations_per_epoch": 2,
+        "save_period": 5,
+        "log_every_step": 1,
     },
     "wandb": {
-        "project": "dl2-generation"
+        "project": "dl2-cvae-generation"
     }
 }

@@ -3,6 +3,7 @@ from tqdm import tqdm
 import numpy as np
 import torch
 import torch.nn as nn
+from torch.utils.data import DataLoader
 
 from piq import FID, SSIMLoss
 
@@ -12,9 +13,9 @@ from src.utils.utils import make_train_image, make_test_image
 class Trainer:
     def __init__(
         self,
-        model,
-        train_inf_dataloader,
-        test_dataloader,
+        model: nn.Module,
+        train_inf_dataloader: DataLoader,
+        test_dataloader: DataLoader,
         optimizer: torch.optim.Optimizer,
         lr_scheduler: torch.optim.lr_scheduler.LRScheduler,
         writer,
@@ -40,7 +41,7 @@ class Trainer:
 
         self.fixed_noise = torch.randn(len(test_dataloader.dataset), self.latent_dim, device=self.device)
         self.fid_metric = FID()
-        self.ssim_metric = SSIMLoss(data_range=255.0)
+        self.ssim_metric = SSIMLoss(data_range=1.0)
 
     def move_batch_to_device(self, batch):
         for key in ["img", "target"]:
@@ -48,8 +49,8 @@ class Trainer:
 
     def train_epoch(self):
         self.model.train()
-        sum_loss = 0
         for batch_idx, batch in enumerate(self.train_inf_dataloader):
+            log_wandb = {"learning_rate": self.lr_scheduler.get_last_lr()[0]}
             self.optimizer.zero_grad()
 
             self.move_batch_to_device(batch)
@@ -58,23 +59,20 @@ class Trainer:
             batch.update(output)
 
             loss = self.model.loss_function(**batch)
-            loss_item = loss.item()
-            sum_loss += loss_item
-            loss.backward()
+            for k, v in loss:
+                log_wandb.update({k: v.item()})
+            loss["loss"].backward()
 
-            log_wandb = {"train_loss": loss_item, "learning_rate": self.lr_scheduler.get_last_lr()[0]}
             self.optimizer.step()
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                log_wandb.update({"train": make_train_image(batch["pred"].detach().cpu().numpy())})
-
+                train_image = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2)
+                log_wandb.update({"train": train_image})
             self.writer.log(log_wandb)
 
             if batch_idx == self.iterations_per_epoch:
                 break
-
-        return sum_loss / self.iterations_per_epoch
 
     def test(self):
         self.model.eval()
@@ -89,24 +87,25 @@ class Trainer:
                 samples = self.model.sample(bs, batch["target"], z=self.fixed_noise[last_idx : last_idx + bs, ...])
 
                 real_imgs.append(batch["img"].detach().cpu())
-                constructed_imgs.append(torch.clamp(samples.detach(), 0, 255))
+                constructed_imgs.append(samples.detach())
                 targets.append(batch["target"].detach().cpu().numpy())
+                last_idx += bs
 
-        real_imgs = torch.cat(real_imgs)
-        constructed_imgs = torch.cat(constructed_imgs)
+        convert_to_01 = lambda imgs: (imgs + 1) / 2
+        real_imgs = convert_to_01(torch.cat(real_imgs))
+        constructed_imgs = convert_to_01(torch.cat(constructed_imgs))
 
         self.writer.log(
             {
                 "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)).cpu().numpy(),
                 "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
+                "test": make_test_image(constructed_imgs.cpu().numpy(), targets),
             }
         )
-        self.writer.log_image("test", make_test_image(constructed_imgs.cpu().numpy(), targets))
 
-    def log_after_training_epoch(self, epoch, train_avg_loss):
+    def log_after_training_epoch(self, epoch):
         print(16 * "-")
         print(f"epoch:\t{epoch}")
-        print(f"train_avg_loss:\t{train_avg_loss:.8f}")
         print(f"learning_rate:\t{self.lr_scheduler.get_last_lr()[0]:.8f}")
         print(16 * "-")
 
