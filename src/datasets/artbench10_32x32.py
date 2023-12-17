@@ -28,6 +28,7 @@ class ArtBench10_32x32(CIFAR10):
     def __getitem__(self, index: int):
         img, target = self.data[index], int(self.targets[index])
 
+        print(img.shape)
         return (
             TF.normalize(
                 torch.from_numpy(img).to(torch.float32) / 255.0,
