@@ -60,6 +60,7 @@ def training_pipeline(args, config):
         writer,
         save_dir,
         device,
+        config,
         **config["trainer"],
     )
 

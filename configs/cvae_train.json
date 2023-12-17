@@ -44,7 +44,7 @@
             "warmup_iters": 25000
         },
         "exponential": {
-            "gamma": 0.9996
+            "gamma": 0.99997
         }
     },
     "trainer": {

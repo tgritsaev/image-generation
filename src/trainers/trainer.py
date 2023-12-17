@@ -21,6 +21,7 @@ class Trainer:
         writer,
         save_dir: str,
         device: torch.device,
+        config,
         epochs: int,
         iterations_per_epoch: int,
         save_period: int = 1,
@@ -39,7 +40,7 @@ class Trainer:
         self.save_period = save_period
         self.log_every_step = log_every_step
 
-        self.fixed_noise = torch.randn(len(test_dataloader.dataset), self.latent_dim, device=self.device)
+        self.fixed_noise = torch.randn(len(test_dataloader.dataset), config["ConditionalVAE"]["args"]["latent_dim"], device=self.device)
         self.fid_metric = FID()
         self.ssim_metric = SSIMLoss(data_range=1.0)
 
