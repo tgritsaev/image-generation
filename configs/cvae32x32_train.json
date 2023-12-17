@@ -14,7 +14,7 @@
         "train": {
             "type": "ArtBench10_32x32",
             "dataset_args": {
-                "root": "/kaggle/input/artbench10",
+                "root": "/kaggle/working/artbench10",
                 "download": true,
                 "train": true
             },
@@ -27,7 +27,7 @@
         "test": {
             "type": "ArtBench10_32x32",
             "dataset_args": {
-                "root": "/kaggle/input/artbench10",
+                "root": "/kaggle/working/artbench10",
                 "train": false,
                 "limit": 32
             },
