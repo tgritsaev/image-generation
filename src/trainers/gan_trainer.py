@@ -127,7 +127,7 @@ class GANTrainer:
             if batch_idx == self.iterations_per_epoch:
                 break
 
-    def test(self, epoch):
+    def test(self):
         self.g_model.eval()
         self.d_model.eval()
         last_idx = 0
@@ -180,7 +180,7 @@ class GANTrainer:
         for epoch in tqdm(range(self.epochs)):
             self.train_epoch()
             self.log_after_training_epoch(epoch)
-            self.test(epoch)
+            self.test()
 
             if (epoch + 1) % self.save_period == 0:
                 self.save_state(epoch)
