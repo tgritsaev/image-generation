@@ -62,7 +62,7 @@ class ConditionalVAE(BaseModel):
         for i in range(len(hidden_dims) - 1):
             modules.append(
                 nn.Sequential(
-                    nn.ConvTranspose2d(2 * hidden_dims[i], hidden_dims[i + 1], kernel_size=3, stride=2, padding=1, output_padding=1),
+                    nn.ConvTranspose2d(hidden_dims[i], hidden_dims[i + 1], kernel_size=3, stride=2, padding=1, output_padding=1),
                     nn.BatchNorm2d(hidden_dims[i + 1]),
                     nn.LeakyReLU(),
                 )
@@ -70,7 +70,7 @@ class ConditionalVAE(BaseModel):
         self.decoder = nn.ModuleList(modules)
 
         self.head = nn.Sequential(
-            nn.ConvTranspose2d(hidden_dims[-1] * 2, hidden_dims[-1], kernel_size=3, stride=2, padding=1, output_padding=1),
+            nn.ConvTranspose2d(hidden_dims[-1], hidden_dims[-1], kernel_size=3, stride=2, padding=1, output_padding=1),
             nn.BatchNorm2d(hidden_dims[-1]),
             nn.LeakyReLU(),
             nn.Conv2d(hidden_dims[-1], out_channels=n_channels, kernel_size=3, padding=1),
