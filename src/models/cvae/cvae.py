@@ -86,7 +86,6 @@ class ConditionalVAE(BaseModel):
         for downsample in self.encoder:
             x = downsample(x)
             xs.append(x)
-            print("\n!: ", x.shape)
         latent = torch.flatten(x, start_dim=1)
         mu = self.fc_mu(latent)
         log_var = self.fc_var(latent)
@@ -97,10 +96,8 @@ class ConditionalVAE(BaseModel):
         z = self.decoder_input(z).view(z.shape[0], -1, 2, 2)
         xs.reverse()
         for i in range(len(self.decoder)):
-            print("!!", z.shape, xs[i].shape)
             z_wskip = torch.cat([z, xs[i]], 1)
             z = self.decoder[i](z_wskip)
-        print("??", z.shape, xs[-1].shape)
         result = self.head(torch.cat([z, xs[-1]], 1))
         return result
 
