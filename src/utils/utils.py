@@ -27,8 +27,8 @@ def make_mega_image(samples: np.array, n: int = 8):
     return mega_image
 
 
-def make_test_image(samples: np.array, targets: np.array, n: int = 3, target_cnt: int = 10):
-    used = [0 for _ in range(targets.shape[0])]
+def make_test_image(samples: np.array, targets, n: int = 3, target_cnt: int = 10):
+    used = [0 for _ in range(len(targets))]
     _, c, h, w = samples.shape
     mega_image = np.zeros((h * target_cnt, w * n, c))
     for t in range(target_cnt):

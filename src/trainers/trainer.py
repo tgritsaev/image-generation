@@ -1,3 +1,4 @@
+import wandb
 from tqdm import tqdm
 
 import numpy as np
@@ -69,7 +70,7 @@ class Trainer:
 
             if (batch_idx + 1) % self.log_every_step == 0:
                 train_image = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4)
-                log_wandb.update({"train": train_image})
+                log_wandb.update({"train": wandb.Image(train_image)})
             self.writer.log(log_wandb)
 
             if batch_idx == self.iterations_per_epoch:
@@ -100,7 +101,7 @@ class Trainer:
             {
                 # "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1).cpu(), constructed_imgs.flatten(1).cpu()).cpu().numpy(),
                 # "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
-                "test": make_test_image(constructed_imgs.cpu().numpy(), np.array(targets)),
+                "test": make_test_image(constructed_imgs.cpu().numpy(), targets),
             }
         )
 
