@@ -36,7 +36,7 @@ class ConditionalVAE(BaseModel):
         self.embed_data = nn.Conv2d(n_channels, n_channels, kernel_size=1)
 
         if hidden_dims is None:
-            hidden_dims = [16, 32, 64, 128, 256, 512, 1024]
+            hidden_dims = [32, 32, 64, 128, 256, 512, 1024]
 
         in_channels = n_channels + 1  # +1 for target label
         # Encoder
@@ -50,7 +50,7 @@ class ConditionalVAE(BaseModel):
                 )
             )
             in_channels = h_dim
-        self.encoder = nn.Sequential(*modules)
+        self.encoder = nn.ModuleList(modules)
 
         self.fc_mu = nn.Linear(4 * hidden_dims[-1], latent_dim)
         self.fc_var = nn.Linear(4 * hidden_dims[-1], latent_dim)
@@ -67,7 +67,7 @@ class ConditionalVAE(BaseModel):
                     nn.LeakyReLU(),
                 )
             )
-        self.decoder = nn.Sequential(*modules)
+        self.decoder = nn.ModuleList(modules)
 
         self.head = nn.Sequential(
             nn.ConvTranspose2d(hidden_dims[-1], hidden_dims[-1], kernel_size=3, stride=2, padding=1, output_padding=1),
@@ -81,17 +81,25 @@ class ConditionalVAE(BaseModel):
         self.apply(weights_init)
 
     def encode(self, img: Tensor) -> List[Tensor]:
-        latent = torch.flatten(self.encoder(img), start_dim=1)
+        x = img
+        xs = []
+        for downsample in self.encoder:
+            x = downsample(x)
+            xs.append(x)
+        latent = torch.flatten(x, start_dim=1)
         mu = self.fc_mu(latent)
         log_var = self.fc_var(latent)
 
-        return mu, log_var
+        return xs[:-1], mu, log_var
 
-    def decode(self, z: Tensor) -> Tensor:
+    def decode(self, z: Tensor, xs: List[Tensor]) -> Tensor:
         result = self.decoder_input(z)
-        result = result.view(-1, self.hidden_dims[0], 2, 2)
-        result = self.decoder(result)
-        result = self.head(result)
+        xs.reverse()
+        for i in range(len(self.decoder)):
+            print("!!", z.shape, xs[i].shape)
+            z = self.decoder[i](torch.cat(z, xs[i]))
+        z = self.decoder(z.view(-1, self.hidden_dims[0], 2, 2))
+        result = self.head(z)
         return result
 
     def reparameterize(self, mu: Tensor, logvar: Tensor) -> Tensor:
@@ -106,11 +114,11 @@ class ConditionalVAE(BaseModel):
         embedded_input = self.embed_data(img)
 
         x = torch.cat([embedded_input, embedded_class], dim=1)
-        mu, log_var = self.encode(x)
+        xs, mu, log_var = self.encode(x)
 
         z = self.reparameterize(mu, log_var)
         z = torch.cat([z, y], dim=1)
-        return {"pred": self.decode(z), "img": img, "mu": mu, "log_var": log_var}
+        return {"pred": self.decode(z, xs), "img": img, "mu": mu, "log_var": log_var}
 
     def train_batch(self, **kwargs) -> List[Tensor]:
         return self.forward(**kwargs)

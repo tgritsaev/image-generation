@@ -4,7 +4,7 @@
         "args": {
             "n_channels": 3,
             "num_classes": 10,
-            "latent_dim": 512,
+            "latent_dim": 256,
             "img_size": 256
         }
     },
