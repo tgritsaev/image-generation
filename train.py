@@ -1,3 +1,4 @@
+import math
 import os
 import json
 import argparse
@@ -45,10 +46,10 @@ def training_pipeline(args, config):
     optimizer = torch.optim.AdamW(model.parameters(), **config["optimizer"])
 
     warmup_iters = config["lr_scheduler"]["linear_warmup"]["warmup_iters"]
-    linear_lambda = lambda iter: (iter + 1) / warmup_iters
+    sqrt_linear_lambda = lambda iter: math.sqrt((iter + 1) / warmup_iters)
     gamma = config["lr_scheduler"]["exponential"]["gamma"]
     exponential_lambda = lambda iter: (gamma ** (iter + 1 - warmup_iters))
-    lr_lambda = lambda iter: linear_lambda(iter) if iter < warmup_iters else exponential_lambda(iter)
+    lr_lambda = lambda iter: sqrt_linear_lambda(iter) if iter < warmup_iters else exponential_lambda(iter)
     lr_scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
 
     trainer = Trainer(

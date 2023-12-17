@@ -40,8 +40,8 @@
         "weight_decay": 0
     },
     "lr_scheduler": {
-        "linear_warmup": {
-            "warmup_iters": 10000
+        "sqrt_linear_warmup": {
+            "warmup_iters": 20000
         },
         "exponential": {
             "gamma": 0.999985
