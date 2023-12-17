@@ -4,7 +4,7 @@
         "args": {
             "n_channels": 1,
             "num_classes": 10,
-            "latent_dim": 25,
+            "latent_dim": 10,
             "img_size": 32,
             "kld_coef": 0.0025,
             "fmp_coef": 0
@@ -38,7 +38,7 @@
         }
     },
     "optimizer": {
-        "lr": 3e-3,
+        "lr": 3e-4,
         "weight_decay": 0
     },
     "lr_scheduler": {
