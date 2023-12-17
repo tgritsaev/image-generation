@@ -40,7 +40,8 @@ class ConditionalVAE(BaseModel):
         self.embed_data = nn.Conv2d(n_channels, n_channels, kernel_size=1)
 
         if hidden_dims is None:
-            hidden_dims = [32, 64, 128, 256, 512, 1024, 1024]
+            # hidden_dims = [32, 64, 128, 256, 512, 1024, 1024]
+            hidden_dims = [128, 256, 512, 1024]
 
         in_channels = n_channels + 1  # +1 for target label
         # Encoder

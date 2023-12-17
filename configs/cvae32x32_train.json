@@ -1,0 +1,61 @@
+{
+    "model": {
+        "type": "ConditionalVAE",
+        "args": {
+            "n_channels": 3,
+            "num_classes": 10,
+            "latent_dim": 2048,
+            "img_size": 256,
+            "reconstruction_coef": 1000,
+            "gamma": 250
+        }
+    },
+    "data": { 
+        "train": {
+            "type": "ArtBench10_256x256",
+            "dataset_args": {
+                "root": "/kaggle/input/artbench10",
+                "train": true
+            },
+            "dataloader_args": {
+                "batch_size": 128,
+                "num_workers": 1,
+                "shuffle": true
+            }
+        },
+        "test": {
+            "type": "ArtBench10_256x256",
+            "dataset_args": {
+                "root": "/kaggle/input/artbench10",
+                "train": false,
+                "limit": 32
+            },
+            "dataloader_args": {
+                "batch_size": 32,
+                "num_workers": 1,
+                "shuffle": false
+            }
+        }
+    },
+    "optimizer": {
+        "lr": 2e-4,
+        "weight_decay": 0
+    },
+    "lr_scheduler": {
+        "sqrt_linear_warmup": {
+            "warmup_iters": 1500
+        },
+        "exponential": {
+            "gamma": 0.99985
+        }
+    },
+    "trainer": {
+        "epochs": 20,
+        "iterations_per_epoch": 1000,
+        "save_period": 5,
+        "log_every_step": 100
+    },
+    "wandb": {
+        "project": "dl2-cvae-generation"
+    }
+}

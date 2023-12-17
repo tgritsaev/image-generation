@@ -1,5 +1,6 @@
 import torch
 from torchvision.datasets import CIFAR10
+import torchvision.transforms.functional as TF
 
 
 class ArtBench10_32x32(CIFAR10):
@@ -27,4 +28,11 @@ class ArtBench10_32x32(CIFAR10):
     def __getitem__(self, index: int):
         img, target = self.data[index], int(self.targets[index])
 
-        return img.to(torch.float32), target
+        return (
+            TF.normalize(
+                img.to(torch.float32) / 255.0,
+                (0.5, 0.5, 0.5),
+                (0.5, 0.5, 0.5),
+            ),
+            target,
+        )
