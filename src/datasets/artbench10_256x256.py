@@ -44,6 +44,7 @@ class ArtBench10_256x256:
             target = []
             for i in range(10):
                 plus = 1 if i < limit % 10 else 0
+                cnt = 0
                 for j in range(len(self.target)):
                     if cnt == (limit // 10) + plus:
                         break
