@@ -48,7 +48,7 @@ class ArtBench10_256x256:
                 for j in range(len(self.target)):
                     if cnt == (limit // 10) + plus:
                         break
-                    if target[j] == i:
+                    if self.target[j] == i:
                         img_path.append(self.img_path[j])
                         self.target(i)
                         cnt += 1
