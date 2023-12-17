@@ -37,7 +37,7 @@
     },
     "optimizer": {
         "lr": 1e-3,
-        "weight_decay": 1e-6
+        "weight_decay": 0
     },
     "lr_scheduler": {
         "linear_warmup": {
