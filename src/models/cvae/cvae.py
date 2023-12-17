@@ -24,6 +24,7 @@ class ConditionalVAE(BaseModel):
         num_classes: int,
         latent_dim: int,
         img_size: int,
+        gamma: float = 10,
         hidden_dims: List = None,
     ):
         super().__init__()
@@ -31,6 +32,7 @@ class ConditionalVAE(BaseModel):
         self.num_classes = num_classes
         self.latent_dim = latent_dim
         self.img_size = img_size
+        self.gamma = gamma
 
         self.embed_class = nn.Linear(num_classes, img_size * img_size)
         self.embed_data = nn.Conv2d(n_channels, n_channels, kernel_size=1)
@@ -86,6 +88,7 @@ class ConditionalVAE(BaseModel):
         for downsample in self.encoder:
             x = downsample(x)
             xs.append(x)
+            print("\n!!", x.shape)
         latent = torch.flatten(x, start_dim=1)
         mu = self.fc_mu(latent)
         log_var = self.fc_var(latent)
@@ -98,6 +101,7 @@ class ConditionalVAE(BaseModel):
         for i in range(len(self.decoder)):
             z = self.decoder[i](z)
             zs.append(z)
+            print("\n??", z.shape)
         result = self.head(z)
         return result, zs
 
@@ -128,11 +132,11 @@ class ConditionalVAE(BaseModel):
         feature_maps_loss = 0
         for i in range(len(xs)):
             print(xs[i].shape, zs[i].shape)
-            feature_maps_loss += F.mse_loss(xs[i], zs[i])
+            feature_maps_loss = feature_maps_loss + F.mse_loss(xs[i], zs[i])
         reconstruction_loss = F.mse_loss(pred, img)
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu**2 - log_var.exp(), dim=1), dim=0)
 
-        loss = reconstruction_loss + img.shape[0] * kld_loss
+        loss = reconstruction_loss + img.shape[0] * kld_loss + feature_maps_loss * self.gamma
         return {
             "loss": loss,
             "reconstruction_loss": reconstruction_loss,

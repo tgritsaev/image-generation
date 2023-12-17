@@ -5,7 +5,8 @@
             "n_channels": 3,
             "num_classes": 10,
             "latent_dim": 2048,
-            "img_size": 256
+            "img_size": 256,
+            "gamma": 10
         }
     },
     "data": { 
