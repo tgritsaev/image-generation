@@ -87,7 +87,7 @@ class Trainer:
                 bs = batch["target"].shape[0]
                 samples = self.model.sample(bs, batch["target"], z=self.fixed_noise[last_idx : last_idx + bs, ...])
 
-                real_imgs.append(batch["img"].detach().cpu())
+                real_imgs.append(batch["img"].detach())
                 constructed_imgs.append(samples.detach())
                 targets.append(batch["target"].detach().cpu().numpy())
                 last_idx += bs
