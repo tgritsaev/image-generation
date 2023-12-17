@@ -38,7 +38,7 @@
         }
     },
     "optimizer": {
-        "lr": 1e-3,
+        "lr": 2e-4,
         "weight_decay": 0
     },
     "lr_scheduler": {
