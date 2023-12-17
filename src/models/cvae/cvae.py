@@ -98,7 +98,7 @@ class ConditionalVAE(BaseModel):
         xs.reverse()
         for i in range(len(self.decoder)):
             print("!!", z.shape, xs[i].shape)
-            z = self.decoder[i](torch.cat(z, xs[i]))
+            z = self.decoder[i](z)
         z = self.decoder(z.view(-1, self.hidden_dims[0], 2, 2))
         result = self.head(z)
         return result
