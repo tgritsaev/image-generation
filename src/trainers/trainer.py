@@ -40,11 +40,7 @@ class Trainer:
         self.save_period = save_period
         self.log_every_step = log_every_step
 
-        self.fixed_noise = torch.randn(
-            len(test_dataloader.dataset),
-            config["model"]["ConditionalVAE"]["args"]["latent_dim"],
-            device=self.device,
-        )
+        self.fixed_noise = torch.randn(len(test_dataloader.dataset), config["model"]["args"]["latent_dim"], device=self.device)
         self.fid_metric = FID()
         self.ssim_metric = SSIMLoss(data_range=1.0)
 
@@ -72,7 +68,7 @@ class Trainer:
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                train_image = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2)
+                train_image = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4)
                 log_wandb.update({"train": train_image})
             self.writer.log(log_wandb)
 
