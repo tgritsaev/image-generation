@@ -38,8 +38,22 @@ class ArtBench10_256x256:
         random.shuffle(self.img_path)
         random.seed(0)
         random.shuffle(self.target)
-        self.img_path = self.img_path[:limit]
-        self.target = self.target[:limit]
+        # complex logic as long as we want all classes to be presented.
+        if limit:
+            img_path = []
+            target = []
+            for i in range(10):
+                plus = 1 if i < limit % 10 else 0
+                for j in range(len(self.target)):
+                    if cnt == (limit // 10) + plus:
+                        break
+                    if target[j] == i:
+                        img_path.append(self.img_path[j])
+                        self.target(i)
+                        cnt += 1
+            assert len(img_path) == limit
+            self.img_path = img_path
+            self.target = target
 
     def __len__(self):
         return len(self.img_path)
