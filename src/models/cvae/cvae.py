@@ -119,6 +119,7 @@ class ConditionalVAE(BaseModel):
         embedded_class = embedded_class.view(-1, self.img_size, self.img_size).unsqueeze(1)
         embedded_input = self.embed_data(img)
 
+        print(embedded_input.shape, embedded_class.shape)
         x = torch.cat([embedded_input, embedded_class], dim=1)
         xs, mu, log_var = self.encode(x)
 
