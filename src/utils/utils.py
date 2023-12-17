@@ -45,7 +45,7 @@ class LocalWriter:
     def __init__(self):
         pass
 
-    def log(self, msg, commit):
+    def log(self, msg):
         print(f"local_wandb log: {msg}")
 
     def finish(self):
@@ -57,8 +57,8 @@ class WandbWriter:
         print(f"wandb project: {project}, name: {name}")
         wandb.init(project=project, name=name)
 
-    def log(self, msg, commit: bool = True):
-        wandb.log(msg, commit=commit)
+    def log(self, msg):
+        wandb.log(msg)
 
     def finish(self):
         wandb.finish()

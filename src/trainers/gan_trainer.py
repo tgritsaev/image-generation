@@ -151,8 +151,7 @@ class GANTrainer:
                 "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1), constructed_imgs.flatten(1)).cpu().numpy(),
                 "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
                 "test": wandb.Image(make_mega_image(constructed_imgs.cpu().numpy(), 8)),
-            },
-            False,
+            }
         )
 
     def log_after_training_epoch(self, epoch):
