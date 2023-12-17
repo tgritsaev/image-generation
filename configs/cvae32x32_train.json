@@ -15,6 +15,7 @@
             "type": "ArtBench10_32x32",
             "dataset_args": {
                 "root": "/kaggle/input/artbench10",
+                "download": true,
                 "train": true
             },
             "dataloader_args": {
