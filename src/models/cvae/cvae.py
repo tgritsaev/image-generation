@@ -132,16 +132,16 @@ class ConditionalVAE(BaseModel):
     def loss_function(self, pred, xs, zs, img, mu, log_var, **kwargs) -> dict:
         xs.reverse()
         feature_maps_loss = 0
-        for i in range(len(xs)):
-            feature_maps_loss = feature_maps_loss + F.mse_loss(xs[i], zs[i])
+        # for i in range(len(xs)):
+        #     feature_maps_loss = feature_maps_loss + F.mse_loss(xs[i], zs[i])
         reconstruction_loss = F.mse_loss(pred, img)
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu**2 - log_var.exp(), dim=1), dim=0)
 
-        loss = reconstruction_loss + self.kld_coef * img.shape[0] * kld_loss + self.fmp_coef * feature_maps_loss
+        loss = reconstruction_loss + self.kld_coef * kld_loss + self.fmp_coef * feature_maps_loss
         return {
             "loss": loss,
             "reconstruction_loss": reconstruction_loss,
-            "kld": self.kld_coef * img.shape[0] * kld_loss,
+            "kld": self.kld_coef * kld_loss,
             "feature_maps_loss": self.fmp_coef * feature_maps_loss,
         }
 
