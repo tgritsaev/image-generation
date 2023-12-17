@@ -70,7 +70,6 @@ class Trainer:
 
             if (batch_idx + 1) % self.log_every_step == 0:
                 train_image = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4) * 255
-                print("\n!!!!!!\n", train_image.shape)
                 log_wandb.update({"train": wandb.Image(train_image)})
             self.writer.log(log_wandb)
 
@@ -98,13 +97,12 @@ class Trainer:
         real_imgs = convert_to_01(torch.cat(real_imgs))
         constructed_imgs = convert_to_01(torch.cat(constructed_imgs))
         targets = np.concatenate(targets)
-        print(targets)
 
         self.writer.log(
             {
                 # "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1).cpu(), constructed_imgs.flatten(1).cpu()).cpu().numpy(),
                 # "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
-                "test": make_test_image(constructed_imgs.cpu().numpy(), targets),
+                "test": wandb.Image(make_test_image(constructed_imgs.cpu().numpy(), targets)),
             }
         )
 
