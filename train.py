@@ -45,7 +45,7 @@ def training_pipeline(args, config):
 
     optimizer = torch.optim.AdamW(model.parameters(), **config["optimizer"])
 
-    warmup_iters = config["lr_scheduler"]["linear_warmup"]["warmup_iters"]
+    warmup_iters = config["lr_scheduler"]["sqrt_linear_warmup"]["warmup_iters"]
     sqrt_linear_lambda = lambda iter: math.sqrt((iter + 1) / warmup_iters)
     gamma = config["lr_scheduler"]["exponential"]["gamma"]
     exponential_lambda = lambda iter: (gamma ** (iter + 1 - warmup_iters))
