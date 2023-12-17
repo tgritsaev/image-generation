@@ -62,15 +62,15 @@ class ConditionalVAE(BaseModel):
         for i in range(len(hidden_dims) - 1):
             modules.append(
                 nn.Sequential(
-                    nn.ConvTranspose2d(hidden_dims[i], hidden_dims[i + 1], kernel_size=3, stride=2, padding=1, output_padding=1),
-                    nn.BatchNorm2d(hidden_dims[i + 1]),
+                    nn.ConvTranspose2d(2 * hidden_dims[i], 2 * hidden_dims[i + 1], kernel_size=3, stride=2, padding=1, output_padding=1),
+                    nn.BatchNorm2d(2 * hidden_dims[i + 1]),
                     nn.LeakyReLU(),
                 )
             )
         self.decoder = nn.ModuleList(modules)
 
         self.head = nn.Sequential(
-            nn.ConvTranspose2d(hidden_dims[-1], hidden_dims[-1], kernel_size=3, stride=2, padding=1, output_padding=1),
+            nn.ConvTranspose2d(2 * hidden_dims[-1], hidden_dims[-1], kernel_size=3, stride=2, padding=1, output_padding=1),
             nn.BatchNorm2d(hidden_dims[-1]),
             nn.LeakyReLU(),
             nn.Conv2d(hidden_dims[-1], out_channels=n_channels, kernel_size=3, padding=1),
@@ -91,14 +91,15 @@ class ConditionalVAE(BaseModel):
         mu = self.fc_mu(latent)
         log_var = self.fc_var(latent)
 
-        return xs[:-1], mu, log_var
+        return xs, mu, log_var
 
     def decode(self, z: Tensor, xs: List[Tensor]) -> Tensor:
         z = self.decoder_input(z).view(z.shape[0], -1, 2, 2)
         xs.reverse()
         for i in range(len(self.decoder)):
             print("!!", z.shape, xs[i].shape)
-            z = self.decoder[i](z)
+            z_wskip = torch.cat([z, xs[i]], 1)
+            z = self.decoder[i](z_wskip)
         z = self.decoder(z.view(-1, self.hidden_dims[0], 2, 2))
         result = self.head(z)
         return result
