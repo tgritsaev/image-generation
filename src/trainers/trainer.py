@@ -60,7 +60,7 @@ class Trainer:
             batch.update(output)
 
             loss = self.model.loss_function(**batch)
-            for k, v in loss:
+            for k, v in loss.items():
                 log_wandb.update({k: v.item()})
             loss["loss"].backward()
 
