@@ -94,7 +94,7 @@ class ConditionalVAE(BaseModel):
         return xs[:-1], mu, log_var
 
     def decode(self, z: Tensor, xs: List[Tensor]) -> Tensor:
-        result = self.decoder_input(z)
+        result = self.decoder_input(z).reshape(-1, 512, 2, 2)
         xs.reverse()
         for i in range(len(self.decoder)):
             print("!!", z.shape, xs[i].shape)
