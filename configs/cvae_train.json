@@ -41,7 +41,7 @@
     },
     "lr_scheduler": {
         "sqrt_linear_warmup": {
-            "warmup_iters": 20000
+            "warmup_iters": 15000
         },
         "exponential": {
             "gamma": 0.999985
