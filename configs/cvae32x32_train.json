@@ -2,12 +2,12 @@
     "model": {
         "type": "ConditionalVAE",
         "args": {
-            "n_channels": 3,
+            "n_channels": 1,
             "num_classes": 10,
-            "latent_dim": 64,
+            "latent_dim": 25,
             "img_size": 32,
-            "reconstruction_coef": 4000,
-            "gamma": 500
+            "kld_coef": 0.00025,
+            "fmp_coef": 0
         }
     },
     "data": { 
@@ -39,7 +39,7 @@
     },
     "optimizer": {
         "lr": 3e-4,
-        "weight_decay": 1e-5
+        "weight_decay": 0
     },
     "lr_scheduler": {
         "sqrt_linear_warmup": {
