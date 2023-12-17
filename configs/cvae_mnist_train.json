@@ -4,7 +4,7 @@
         "args": {
             "n_channels": 1,
             "num_classes": 10,
-            "latent_dim": 50,
+            "latent_dim": 25,
             "img_size": 32,
             "kld_coef": 0.0025,
             "fmp_coef": 0
