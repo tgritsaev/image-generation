@@ -139,9 +139,12 @@ class ConditionalVAE(BaseModel):
         loss = self.reconstruction_coef * reconstruction_loss + img.shape[0] * kld_loss + self.gamma * feature_maps_loss
         return {
             "loss": loss,
-            "reconstruction_loss": self.reconstruction_coef * reconstruction_loss,
+            "mul_reconstruction_loss": self.reconstruction_coef * reconstruction_loss,
+            "mul_kld": img.shape[0] * kld_loss,
+            "mul_feature_maps_loss": self.gamma * feature_maps_loss,
+            "reconstruction_loss": reconstruction_loss,
             "kld": kld_loss,
-            "feature_maps_loss": self.gamma * feature_maps_loss,
+            "feature_maps_loss": feature_maps_loss,
         }
 
     def sample(self, num_samples: int, target: Tensor, z=None) -> Tensor:
