@@ -7,7 +7,7 @@
             "latent_dim": 100,
             "img_size": 32,
             "reconstruction_coef": 100,
-            "gamma": 0
+            "gamma": 50
         }
     },
     "data": { 
