@@ -125,7 +125,7 @@ class ConditionalVAE(BaseModel):
     def loss_function(self, pred, xs, zs, img, mu, log_var, **kwargs) -> dict:
         xs.reverse()
         feature_maps_loss = 0
-        for i in range(xs):
+        for i in range(len(xs)):
             print(xs[i].shape, zs[i].shape)
             feature_maps_loss += F.mse_loss(xs[i], zs[i])
         reconstruction_loss = F.mse_loss(pred, img)
