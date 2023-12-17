@@ -100,7 +100,7 @@ class Trainer:
             {
                 # "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1).cpu(), constructed_imgs.flatten(1).cpu()).cpu().numpy(),
                 # "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
-                "test": make_test_image(constructed_imgs.cpu().numpy(), targets),
+                "test": make_test_image(constructed_imgs.cpu().numpy(), np.array(targets)),
             }
         )
 
