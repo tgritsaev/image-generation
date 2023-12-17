@@ -6,8 +6,8 @@
             "num_classes": 10,
             "latent_dim": 50,
             "img_size": 32,
-            "reconstruction_coef": 100,
-            "gamma": 50
+            "kld_coef": 0.00025,
+            "fmp_coef": 0
         }
     },
     "data": { 
@@ -38,15 +38,15 @@
         }
     },
     "optimizer": {
-        "lr": 3e-4,
-        "weight_decay": 1e-5
+        "lr": 3e-3,
+        "weight_decay": 0
     },
     "lr_scheduler": {
         "sqrt_linear_warmup": {
             "warmup_iters": 1500
         },
         "exponential": {
-            "gamma": 0.99985
+            "gamma": 0.9997
         }
     },
     "trainer": {

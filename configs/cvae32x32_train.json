@@ -4,10 +4,10 @@
         "args": {
             "n_channels": 3,
             "num_classes": 10,
-            "latent_dim": 50,
+            "latent_dim": 64,
             "img_size": 32,
-            "reconstruction_coef": 100,
-            "gamma": 50
+            "reconstruction_coef": 4000,
+            "gamma": 500
         }
     },
     "data": { 

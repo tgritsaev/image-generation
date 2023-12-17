@@ -24,8 +24,8 @@ class ConditionalVAE(BaseModel):
         num_classes: int,
         latent_dim: int,
         img_size: int,
-        reconstruction_coef: float = 25,
-        gamma: float = 10,
+        kld_coef: float = 0.00025,
+        fmp_coef: float = 0,
         hidden_dims: List = None,
     ):
         super().__init__()
@@ -33,15 +33,15 @@ class ConditionalVAE(BaseModel):
         self.num_classes = num_classes
         self.latent_dim = latent_dim
         self.img_size = img_size
-        self.reconstruction_coef = reconstruction_coef
-        self.gamma = gamma
+        self.kld_coef = kld_coef
+        self.fmp_coef = fmp_coef
 
         self.embed_class = nn.Linear(num_classes, img_size * img_size)
         self.embed_data = nn.Conv2d(n_channels, n_channels, kernel_size=1)
 
         if hidden_dims is None:
             # hidden_dims = [32, 64, 128, 256, 512, 1024, 1024]
-            hidden_dims = [128, 256, 512, 1024]
+            hidden_dims = [64, 128, 256, 512]
 
         in_channels = n_channels + 1  # +1 for target label
         # Encoder
@@ -137,15 +137,12 @@ class ConditionalVAE(BaseModel):
         reconstruction_loss = F.mse_loss(pred, img)
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu**2 - log_var.exp(), dim=1), dim=0)
 
-        loss = self.reconstruction_coef * reconstruction_loss + img.shape[0] * kld_loss + self.gamma * feature_maps_loss
+        loss = reconstruction_loss + self.kld_coef * img.shape[0] * kld_loss + self.fmp_coef * feature_maps_loss
         return {
             "loss": loss,
-            "mul_reconstruction_loss": self.reconstruction_coef * reconstruction_loss,
-            "mul_kld": img.shape[0] * kld_loss,
-            "mul_feature_maps_loss": self.gamma * feature_maps_loss,
             "reconstruction_loss": reconstruction_loss,
-            "kld": kld_loss,
-            "feature_maps_loss": feature_maps_loss,
+            "kld": self.kld_coef * img.shape[0] * kld_loss,
+            "feature_maps_loss": self.fmp_coef * feature_maps_loss,
         }
 
     def sample(self, num_samples: int, target: Tensor, z=None) -> Tensor:
