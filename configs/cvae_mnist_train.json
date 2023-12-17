@@ -7,7 +7,7 @@
             "latent_dim": 50,
             "img_size": 32,
             "kld_coef": 0.00025,
-            "fmp_coef": 0
+            "fmp_coef": 0.1
         }
     },
     "data": { 
@@ -38,7 +38,7 @@
         }
     },
     "optimizer": {
-        "lr": 3e-3,
+        "lr": 3e-4,
         "weight_decay": 0
     },
     "lr_scheduler": {
