@@ -16,7 +16,7 @@
                 "train": true
             },
             "dataloader_args": {
-                "batch_size": 64,
+                "batch_size": 128,
                 "num_workers": 1,
                 "shuffle": true
             }
