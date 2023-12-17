@@ -31,7 +31,7 @@ class ArtBench10_32x32(CIFAR10):
         print(img.shape)
         return (
             TF.normalize(
-                torch.from_numpy(img).to(torch.float32) / 255.0,
+                torch.from_numpy(img).to(torch.float32).transpose(2, 0, 1) / 255.0,
                 (0.5, 0.5, 0.5),
                 (0.5, 0.5, 0.5),
             ),
