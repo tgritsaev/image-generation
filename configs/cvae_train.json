@@ -6,6 +6,7 @@
             "num_classes": 10,
             "latent_dim": 2048,
             "img_size": 256,
+            "reconstruction_coef": 25,
             "gamma": 10
         }
     },
