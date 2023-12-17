@@ -95,6 +95,7 @@ class Trainer:
         convert_to_01 = lambda imgs: (imgs + 1) / 2
         real_imgs = convert_to_01(torch.cat(real_imgs))
         constructed_imgs = convert_to_01(torch.cat(constructed_imgs))
+        print("\n!!!!!!!!!!!!!!!!!!!!!!\n", real_imgs.shape, constructed_imgs.shape)
 
         self.writer.log(
             {
