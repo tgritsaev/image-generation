@@ -1,3 +1,6 @@
+# images in scripts
+scripts/media
+
 # mac os file
 .DS_store
 
