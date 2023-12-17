@@ -100,7 +100,7 @@ class ConditionalVAE(BaseModel):
             print("!!", z.shape, xs[i].shape)
             z_wskip = torch.cat([z, xs[i]], 1)
             z = self.decoder[i](z_wskip)
-        z = self.decoder(z.view(-1, self.hidden_dims[0], 2, 2))
+        print("??", z.shape, xs[-1].shape)
         result = self.head(z)
         return result
 
