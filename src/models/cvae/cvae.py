@@ -90,7 +90,6 @@ class ConditionalVAE(BaseModel):
         for downsample in self.encoder:
             x = downsample(x)
             xs.append(x)
-            print("\n!!", x.shape)
         latent = torch.flatten(x, start_dim=1)
         mu = self.fc_mu(latent)
         log_var = self.fc_var(latent)
@@ -134,7 +133,6 @@ class ConditionalVAE(BaseModel):
         xs.reverse()
         feature_maps_loss = 0
         for i in range(len(xs)):
-            print(xs[i].shape, zs[i].shape)
             feature_maps_loss = feature_maps_loss + F.mse_loss(xs[i], zs[i])
         reconstruction_loss = F.mse_loss(pred, img)
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu**2 - log_var.exp(), dim=1), dim=0)
