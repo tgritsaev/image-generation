@@ -151,5 +151,5 @@ class ConditionalVAE(BaseModel):
         z = z.to(target.device)
 
         z = torch.cat([z, y], dim=1)
-        samples = self.decode(z)
+        samples = self.decode(z)[0]
         return samples
