@@ -41,17 +41,17 @@
     },
     "lr_scheduler": {
         "linear_warmup": {
-            "warmup_iters": 25000
+            "warmup_iters": 10000
         },
         "exponential": {
-            "gamma": 0.99997
+            "gamma": 0.999985
         }
     },
     "trainer": {
         "epochs": 100,
-        "iterations_per_epoch": 1,
+        "iterations_per_epoch": 1000,
         "save_period": 5,
-        "log_every_step": 1
+        "log_every_step": 100
     },
     "wandb": {
         "project": "dl2-cvae-generation"
