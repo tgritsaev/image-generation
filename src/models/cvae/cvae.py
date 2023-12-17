@@ -103,7 +103,6 @@ class ConditionalVAE(BaseModel):
         for i in range(len(self.decoder)):
             z = self.decoder[i](z)
             zs.append(z)
-            print("\n??", z.shape)
         result = self.head(z)
         return result, zs
 
