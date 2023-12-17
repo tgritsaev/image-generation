@@ -4,7 +4,7 @@
         "args": {
             "n_channels": 3,
             "num_classes": 10,
-            "latent_dim": 2048,
+            "latent_dim": 1024,
             "img_size": 32,
             "reconstruction_coef": 1000,
             "gamma": 250

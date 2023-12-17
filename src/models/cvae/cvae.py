@@ -91,7 +91,6 @@ class ConditionalVAE(BaseModel):
         for downsample in self.encoder:
             x = downsample(x)
             xs.append(x)
-            print("\n!!", x.shape)
         latent = torch.flatten(x, start_dim=1)
         mu = self.fc_mu(latent)
         log_var = self.fc_var(latent)
@@ -119,7 +118,6 @@ class ConditionalVAE(BaseModel):
         embedded_class = embedded_class.view(-1, self.img_size, self.img_size).unsqueeze(1)
         embedded_input = self.embed_data(img)
 
-        print(embedded_input.shape, embedded_class.shape)
         x = torch.cat([embedded_input, embedded_class], dim=1)
         xs, mu, log_var = self.encode(x)
 
