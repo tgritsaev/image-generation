@@ -4,7 +4,7 @@
         "args": {
             "n_channels": 3,
             "num_classes": 10,
-            "latent_dim": 1024,
+            "latent_dim": 100,
             "img_size": 32,
             "reconstruction_coef": 100,
             "gamma": 0
@@ -19,7 +19,7 @@
                 "train": true
             },
             "dataloader_args": {
-                "batch_size": 64,
+                "batch_size": 128,
                 "num_workers": 1,
                 "shuffle": true
             }
