@@ -12,9 +12,9 @@
     },
     "data": { 
         "train": {
-            "type": "ArtBench10_256x256",
+            "type": "ArtBench10_32x32",
             "dataset_args": {
-                "root": "/kaggle/input/artbench10/artbench-10-python/artbench-10-batches-py",
+                "root": "/kaggle/input/artbench10",
                 "train": true
             },
             "dataloader_args": {
@@ -24,9 +24,9 @@
             }
         },
         "test": {
-            "type": "ArtBench10_256x256",
+            "type": "ArtBench10_32x32",
             "dataset_args": {
-                "root": "/kaggle/input/artbench10/artbench-10-python/artbench-10-batches-py",
+                "root": "/kaggle/input/artbench10",
                 "train": false,
                 "limit": 32
             },
