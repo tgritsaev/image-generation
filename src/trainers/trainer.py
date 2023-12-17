@@ -73,7 +73,7 @@ class Trainer:
                 log_wandb.update({"train": wandb.Image(train_image)})
             self.writer.log(log_wandb)
 
-            if batch_idx == self.iterations_per_epoch:
+            if batch_idx + 1 == self.iterations_per_epoch:
                 break
 
     def test(self):
@@ -103,7 +103,8 @@ class Trainer:
                 # "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1).cpu(), constructed_imgs.flatten(1).cpu()).cpu().numpy(),
                 # "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
                 "test": wandb.Image(make_test_image(constructed_imgs.cpu().numpy(), targets)),
-            }
+            },
+            False,
         )
 
     def log_after_training_epoch(self, epoch):

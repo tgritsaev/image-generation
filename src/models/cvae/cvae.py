@@ -8,6 +8,15 @@ from torch import Tensor
 from src.models.base_model import BaseModel
 
 
+def weights_init(m):
+    classname = m.__class__.__name__
+    if classname.find("Conv") != -1:
+        nn.init.normal_(m.weight.data, 0.0, 0.02)
+    elif classname.find("BatchNorm") != -1:
+        nn.init.normal_(m.weight.data, 1.0, 0.02)
+        nn.init.constant_(m.bias.data, 0)
+
+
 class ConditionalVAE(BaseModel):
     def __init__(
         self,
@@ -69,6 +78,7 @@ class ConditionalVAE(BaseModel):
         )
 
         self.hidden_dims = hidden_dims
+        self.apply(weights_init)
 
     def encode(self, img: Tensor) -> List[Tensor]:
         latent = torch.flatten(self.encoder(img), start_dim=1)
