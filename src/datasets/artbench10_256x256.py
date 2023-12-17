@@ -55,7 +55,6 @@ class ArtBench10_256x256:
             assert len(img_path) == limit
             self.img_path = img_path
             self.target = target
-            print(target)
 
     def __len__(self):
         return len(self.img_path)
