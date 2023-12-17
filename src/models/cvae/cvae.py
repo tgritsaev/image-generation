@@ -41,7 +41,7 @@ class ConditionalVAE(BaseModel):
 
         if hidden_dims is None:
             # hidden_dims = [32, 64, 128, 256, 512, 1024, 1024]
-            hidden_dims = [64, 128, 256, 512]
+            hidden_dims = [32, 64, 128, 256]
 
         in_channels = n_channels + 1  # +1 for target label
         # Encoder
