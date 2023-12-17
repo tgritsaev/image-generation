@@ -98,6 +98,7 @@ class ConditionalVAE(BaseModel):
     def decode(self, z: Tensor) -> Tensor:
         z = self.decoder_input(z).view(z.shape[0], -1, 2, 2)
         zs = []
+        zs.append(z)
         for i in range(len(self.decoder)):
             z = self.decoder[i](z)
             zs.append(z)
