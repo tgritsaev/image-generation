@@ -7,13 +7,15 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
 
 ## Code organization
 ```shell
-├── README.md                       <- Top-level README.
-├── requirements.txt                <- project requirements.
-├── train.py                        <- train code.
+├── README.md                       <- Top-level README
+├── README.md                       <- report
+├── requirements.txt                <- project requirements
+├── train.py                        <- train code
 ├── congigs/               
 │   ├── cvae_mnist_train.json
-│   ├── cvae_train.json
 │   ├── cvae32x32_train.json
+│   ├── cvae64x64_train.json
+│   ├── cvae256x256_train.json
 │   └── dcgan_train.json
 │   
 ├── results/...               
@@ -21,7 +23,7 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
 ├── scripts/               
 │   └── create_gif.ipynb
 │
-└── src/                            <- main code directory.
+└── src/                            <- main code directory
     ├── datasets/
     │   ├── artbench10_32x32.py
     │   ├── artbench10_256x256.py
