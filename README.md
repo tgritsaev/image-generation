@@ -60,7 +60,7 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
 ```shell
 pip3 install -r requirements.txt
 ```
-2. I used 2 datasets:
+2. I used 3 datasets:
 * [CatsFaces on Kaggle](https://www.kaggle.com/datasets/spandan2/cats-faces-64x64-for-generative-models) for DCGAN.
 * [MNIST](https://en.wikipedia.org/wiki/MNIST_database) and [ArtBench](https://paperswithcode.com/dataset/artbench-10) for CVAE. 
 MNIST and ArtBench-32x32 will be downloaded automatically.
