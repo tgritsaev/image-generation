@@ -3,7 +3,7 @@ HSE Deep Learning course homework.
 
 During this homework I implemented DCGAN, CVAE and diffusion model (all models are tested except of diffusion model).
 
-The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week06-transformers/bhw01).
+The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-VAE-Diff/bhw02).
 
 ## Code organization
 ```shell
