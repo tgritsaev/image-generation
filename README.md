@@ -7,11 +7,11 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
 
 ## Code organization
 ```shell
-├── README.md                       <- Top-level README
-├── README.md                       <- report
-├── requirements.txt                <- project requirements
-├── train.py                        <- train code
-├── congigs/               
+├── README.md                        <- Top-level README
+├── report-ru.pdf                    <- report
+├── requirements.txt                 <- project requirements
+├── train.py                         <- train code
+├── congigs/                         <- models' configs
 │   ├── cvae_mnist_train.json
 │   ├── cvae32x32_train.json
 │   ├── cvae64x64_train.json
@@ -23,15 +23,15 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
 ├── scripts/               
 │   └── create_gif.ipynb
 │
-└── src/                            <- main code directory
-    ├── datasets/
+└── src/                             
+    ├── datasets/                   
     │   ├── artbench10_32x32.py
     │   ├── artbench10_256x256.py
     │   ├── base_dataset.py
     │   ├── cats_faces.py
     │   └── mnist_wrapper.py 
     │            
-    ├── models/
+    ├── models/                     
     │   ├── cvae/
     │   │   └── cvae.py
     │   │   
@@ -44,17 +44,17 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
     │   ├── __init__.py                 
     │   └── base_model.py                 
     │   
-    ├── trainers/
+    ├── trainers/                    
     │   ├── __init__.py                 
-    │   ├── trainer.py                 
-    │   └── gan_trainer.py                 
+    │   ├── trainer.py               <- cvae's and ddpm's trainer           
+    │   └── gan_trainer.py           <- gan's trainer                
     │
     ├── utils/   
-    │   ├── __init__.py
-    │   └── utils.py               
+    │   ├── __init__.py 
+    │   └── utils.py                 <- inf_loop, WandbWriter, LocalWriter, images conversion functions
     │   
     ├── __init__.py
-    └── collate.py
+    └── collate.py                   <- collate_fn, collate_w_target_fn
 ```
 
 ## Installation
