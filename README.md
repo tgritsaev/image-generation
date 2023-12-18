@@ -18,10 +18,10 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
 │   ├── cvae256x256_train.json
 │   └── dcgan_train.json
 │   
-├── results/...               
+├── results/...                      <- images and gifs with results
 │   
 ├── scripts/               
-│   └── create_gif.ipynb
+│   └── create_gif.ipynb             <- download images from wandb, convert to gif
 │
 └── src/                             
     ├── datasets/                   
