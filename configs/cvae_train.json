@@ -44,14 +44,14 @@
     },
     "lr_scheduler": {
         "sqrt_linear_warmup": {
-            "warmup_iters": 1500
+            "warmup_iters": 10000
         },
         "exponential": {
-            "gamma": 0.99985
+            "gamma": 0.99995
         }
     },
     "trainer": {
-        "epochs": 20,
+        "epochs": 100,
         "iterations_per_epoch": 1000,
         "save_period": 5,
         "log_every_step": 100
