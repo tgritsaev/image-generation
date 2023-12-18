@@ -76,12 +76,12 @@ The final DCGAN model was trained with
 
 ## DCGAN results
 | Generated samples during training  | Final generated samples |
-| ------------- | ------------- |
+| :---: | :---: |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
 
 ## CVAE results
 | Reconstructed samples during training  | Generated samples during training |
-| ------------- | ------------- |
+| :---: | :---: |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif)  |
 
 ## Wandb 
