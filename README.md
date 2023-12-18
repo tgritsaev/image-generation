@@ -75,7 +75,7 @@ python3 train.py -c config_path -w True
 The final DCGAN model was trained with 
 
 ## Results
-| Generated samples  | Final samples |
+| Samples during training  | Final samples |
 | ------------- | ------------- |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
 
