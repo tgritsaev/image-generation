@@ -3,7 +3,7 @@ HSE Deep Learning course homework.
 
 During this homework I implemented DCGAN, CVAE and diffusion model (all models are tested except of diffusion model).
 
-See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week06-transformers/bhw01).
+The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week06-transformers/bhw01).
 
 ## Code organization
 ```shell
@@ -60,7 +60,7 @@ See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week
 ```shell
 pip3 install -r requirements.txt
 ```
-2. I use 2 datasets:
+2. I used 2 datasets:
 * [CatsFaces on Kaggle](https://www.kaggle.com/datasets/spandan2/cats-faces-64x64-for-generative-models) for DCGAN.
 * [MNIST](https://en.wikipedia.org/wiki/MNIST_database) and [ArtBench](https://paperswithcode.com/dataset/artbench-10) for CVAE. 
 MNIST and ArtBench-32x32 will be downloaded automatically.
@@ -72,7 +72,6 @@ Download the ArtBench-256x256 version here: [ArtBench-10 on GitHub](https://gith
 ```shell
 python3 train.py -c config_path -w True
 ```
-The final DCGAN model was trained with 
 
 ## DCGAN results
 | Generated samples during training  | Final generated samples |
