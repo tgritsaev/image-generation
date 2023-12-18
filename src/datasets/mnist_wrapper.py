@@ -12,8 +12,4 @@ class MNISTWrapper(MNIST):
     def __getitem__(self, index: int):
         img, target = self.data[index], int(self.targets[index])
 
-        return TF.normalize(
-            self.resize(img.unsqueeze(0)).to(torch.float32) / 255.0,
-            (0.5),
-            (0.5),
-        )
+        return TF.normalize(self.resize(img.unsqueeze(0)).to(torch.float32) / 255.0, (0.5), (0.5)), target
