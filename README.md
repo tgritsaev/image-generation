@@ -75,12 +75,12 @@ python3 train.py -c config_path -w True
 The final DCGAN model was trained with 
 
 ## DCGAN results
-| Generated samples during training  | Final samples |
+| Generated samples during training  | Final generated samples |
 | ------------- | ------------- |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
 
 ## CVAE results
-| Samples during training  | Final samples |
+| Reconstructed samples during training  | Generated samples during training |
 | ------------- | ------------- |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif)  |
 
