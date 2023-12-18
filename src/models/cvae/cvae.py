@@ -137,7 +137,7 @@ class ConditionalVAE(BaseModel):
         reconstruction_loss = F.mse_loss(pred, img)
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu**2 - log_var.exp(), dim=1), dim=0)
 
-        loss = reconstruction_loss + self.kld_coef * kld_loss + self.fmp_coef * feature_maps_loss
+        loss = (reconstruction_loss + self.kld_coef * kld_loss + self.fmp_coef * feature_maps_loss) / pred.shape[0]
         return {
             "loss": loss,
             "reconstruction_loss": reconstruction_loss,
