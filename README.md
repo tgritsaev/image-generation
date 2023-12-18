@@ -73,7 +73,7 @@ The final DCGAN model was trained with
 ## Results
 | Generated samples  | Final samples |
 | ------------- | ------------- |
-| ![Alt Text](https://github.com/tgritsaev/image-generation/tree/main/examples/dcgan.gif)  | [Content Cell](https://github.com/tgritsaev/image-generation/tree/main/dcgan/final_dcgan.png)  |
+| ![](https://github.com/tgritsaev/image-generation/tree/main/examples/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/tree/main/dcgan/final_dcgan.png)  |
 
 ## Wandb 
 1. [Wandb project](https://wandb.ai/tgritsaev/tiny_stories_dl2/overview?workspace=user-tgritsaev).
