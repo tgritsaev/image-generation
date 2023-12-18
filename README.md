@@ -74,10 +74,15 @@ python3 train.py -c config_path -w True
 ```
 The final DCGAN model was trained with 
 
-## Results
+## DCGAN results
 | Samples during training  | Final samples |
 | ------------- | ------------- |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
+
+## CVAE results
+| Samples during training  | Final samples |
+| ------------- | ------------- |
+| ![](https://github.com/tgritsaev/image-generation/blob/main/results/)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/)  |
 
 ## Wandb 
 1. [GAN wandb project](https://wandb.ai/tgritsaev/dl2-gan-generation?workspace=user-tgritsaev).
