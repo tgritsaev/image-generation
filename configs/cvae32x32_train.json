@@ -52,7 +52,7 @@
     "trainer": {
         "epochs": 400,
         "iterations_per_epoch": 1000,
-        "save_period": 10,
+        "save_period": 20,
         "log_every_step": 200
     },
     "wandb": {
