@@ -71,7 +71,7 @@ class Trainer:
             if (batch_idx + 1) % self.log_every_step == 0:
                 reconstructed_train_images = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4) * 255
                 real_images = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4) * 255
-                log_wandb.update({"train": wandb.Image(torch.cat([reconstructed_train_images, real_images]))})
+                log_wandb.update({"train": wandb.Image(np.concatenate([reconstructed_train_images, real_images]))})
             self.writer.log(log_wandb)
 
             if batch_idx + 1 == self.iterations_per_epoch:
