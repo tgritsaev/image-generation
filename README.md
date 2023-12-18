@@ -16,6 +16,8 @@ See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week
 │   ├── cvae32x32_train.json
 │   └── dcgan_train.json
 │   
+├── results/...               
+│   
 ├── scripts/               
 │   └── create_gif.ipynb
 │
