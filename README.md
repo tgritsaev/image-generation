@@ -79,7 +79,7 @@ python3 train.py -c config_path -w True
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
 
 ## CVAE results
-| Reconstructed samples during training (real images in the second row)  | Generated samples during training | Final generated samples |
+| Reconstructions during training (real in the second row)  | Generated samples during training | Final generated samples |
 | :---: | :---: | :---: |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif) | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_mnist_cvae.png)
 
