@@ -94,4 +94,4 @@ The final DCGAN model was trained with
 ## Credits
 DCGAN implementation was taken from the [pytorch DCGAN tutorial](https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html).
 
-DDPM impementation was taken from the [DL-2 in HSE homework](https://github.com/puhsu/dl-hse/blob/main/week08-VAE-Diff/shw5/homework.ipynb), which is fork from the [openai/guided-diffusion](https://github.com/openai/guided-diffusion). Unet implementation was taken from the [Pytorch-UNet](https://github.com/milesial/Pytorch-UNet).
+DDPM impementation was taken from the [DL-2 in HSE homework](https://github.com/puhsu/dl-hse/blob/main/week08-VAE-Diff/shw5/homework.ipynb), which is based on the [openai/guided-diffusion](https://github.com/openai/guided-diffusion). Unet implementation was taken from the [Pytorch-UNet](https://github.com/milesial/Pytorch-UNet).
