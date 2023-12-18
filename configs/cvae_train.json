@@ -8,7 +8,7 @@
             "latent_dim": 256,
             "img_size": 256,
             "kld_coef": 0.00025,
-            "fmp_coef": 0.25
+            "fmp_coef": 0.025
         }
     },
     "data": { 
