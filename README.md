@@ -8,7 +8,7 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
 ## Code organization
 ```shell
 ├── README.md                        <- Top-level README
-├── report-ru.pdf                    <- report
+├── report-ru.pdf                    <- report on Russian language
 ├── requirements.txt                 <- project requirements
 ├── train.py                         <- train code
 ├── congigs/                         <- models configs
