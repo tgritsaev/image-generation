@@ -82,7 +82,7 @@ The final DCGAN model was trained with
 ## CVAE results
 | Samples during training  | Final samples |
 | ------------- | ------------- |
-| ![](https://github.com/tgritsaev/image-generation/blob/main/results/reconstructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif)  |
+| ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif)  |
 
 ## Wandb 
 1. [GAN wandb project](https://wandb.ai/tgritsaev/dl2-gan-generation?workspace=user-tgritsaev).
