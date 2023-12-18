@@ -2,12 +2,13 @@
     "model": {
         "type": "ConditionalVAE",
         "args": {
+            "hidden_dims": [64, 64, 128, 256, 512, 1024, 1024],
             "n_channels": 3,
             "num_classes": 10,
-            "latent_dim": 2048,
+            "latent_dim": 256,
             "img_size": 256,
-            "reconstruction_coef": 1000,
-            "gamma": 250
+            "kld_coef": 0.00025,
+            "fmp_coef": 0.25
         }
     },
     "data": { 

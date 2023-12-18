@@ -69,8 +69,9 @@ class Trainer:
             self.lr_scheduler.step()
 
             if (batch_idx + 1) % self.log_every_step == 0:
-                train_image = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4) * 255
-                log_wandb.update({"train": wandb.Image(train_image)})
+                reconstructed_train_images = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4) * 255
+                real_images = make_train_image((batch["pred"].detach().cpu().numpy() + 1) / 2, 4) * 255
+                log_wandb.update({"train": wandb.Image(torch.cat([reconstructed_train_images, real_images]))})
             self.writer.log(log_wandb)
 
             if batch_idx + 1 == self.iterations_per_epoch:
@@ -103,6 +104,7 @@ class Trainer:
                 # "test_FID": self.fid_metric.compute_metric(real_imgs.flatten(1).cpu(), constructed_imgs.flatten(1).cpu()).cpu().numpy(),
                 # "test_SSIM": self.ssim_metric(real_imgs, constructed_imgs).item(),
                 "test": wandb.Image(make_test_image(constructed_imgs.cpu().numpy(), targets)),
+                "real": wandb.Image(make_test_image(real_imgs.cpu().numpy(), targets)),
             },
             False,
         )
