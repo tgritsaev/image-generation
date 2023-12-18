@@ -83,12 +83,10 @@ python3 train.py -c config_path -w True
 | :---: | :---: | :---: |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif) | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_mnist_cvae.png)
 
-## Report 
-`report_ru.pdf` (only Russian).
-
-## Wandb 
-1. [GAN wandb project](https://wandb.ai/tgritsaev/dl2-gan-generation?workspace=user-tgritsaev).
-2. [CVAE wandb project](https://wandb.ai/tgritsaev/dl2-cvae-generation?workspace=user-tgritsaev).
+## Report & Wandb 
+1. `report_ru.pdf` (only Russian).
+2. [GAN wandb project](https://wandb.ai/tgritsaev/dl2-gan-generation?workspace=user-tgritsaev).
+3. [CVAE wandb project](https://wandb.ai/tgritsaev/dl2-cvae-generation?workspace=user-tgritsaev).
 
 ## Authors
 * Timofei Gritsaev
