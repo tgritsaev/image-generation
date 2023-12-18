@@ -2,10 +2,10 @@
     "model": {
         "type": "ConditionalVAE",
         "args": {
-            "hidden_dims": [64, 128, 256, 512, 1024],
+            "hidden_dims": [256, 512, 1024, 2048, 4096],
             "n_channels": 3,
             "num_classes": 10,
-            "latent_dim": 128,
+            "latent_dim": 256,
             "img_size": 64,
             "kld_coef": 0.00025,
             "fmp_coef": 0.025
