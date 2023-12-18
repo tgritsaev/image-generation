@@ -80,9 +80,9 @@ The final DCGAN model was trained with
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
 
 ## CVAE results
-| Reconstructed samples during training  | Generated samples during training |
-| :---: | :---: |
-| ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif)  |
+| Reconstructed samples during training  | Generated samples during training | Final generated samples |
+| :---: | :---: | :---: |
+| ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif) | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_mnist_cvae.png)
 
 ## Wandb 
 1. [GAN wandb project](https://wandb.ai/tgritsaev/dl2-gan-generation?workspace=user-tgritsaev).
