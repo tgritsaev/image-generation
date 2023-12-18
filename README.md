@@ -67,8 +67,6 @@ MNIST and ArtBench-32x32 will be downloaded automatically.
 Download the ArtBench-256x256 version here: [ArtBench-10 on GitHub](https://github.com/liaopeiyuan/artbench/blob/main/README.md), the extended version [Kaggle (256x256 + AI gen)](https://www.kaggle.com/datasets/ravidussilva/real-ai-art). 
 
 ## Train
-1. To setup wandb, if you have not used it before, run `wandb login` in bash.
-2. To train run
 ```shell
 python3 train.py -c config_path -w True
 ```
