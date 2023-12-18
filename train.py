@@ -16,6 +16,10 @@ from src.trainers.gan_trainer import GANTrainer
 from src.utils.utils import WandbWriter, LocalWriter, inf_loop
 
 
+torch.backends.cudnn.deterministic = False
+torch.backends.cudnn.benchmark = True
+
+
 def training_pipeline(args, config):
     current_time = datetime.now().strftime("%d-%m-%Y--%H-%M")
     save_dir = f"saved/{current_time}"
