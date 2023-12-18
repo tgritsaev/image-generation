@@ -62,7 +62,9 @@ pip3 install -r requirements.txt
 ```
 2. I use 2 datasets:
 * [CatsFaces on Kaggle](https://www.kaggle.com/datasets/spandan2/cats-faces-64x64-for-generative-models) for DCGAN.
-* [ArtBench](https://paperswithcode.com/dataset/artbench-10) for CVAE. Download the 256x256 version here: [ArtBench-10 on GitHub](https://github.com/liaopeiyuan/artbench/blob/main/README.md). Download the 32x32 version by the previous link or from the [Kaggle (only 32x32)](https://www.kaggle.com/datasets/alexanderliao/artbench10), the extended version [Kaggle (256x256 + AI gen)](https://www.kaggle.com/datasets/ravidussilva/real-ai-art). 
+* [MNIST](https://en.wikipedia.org/wiki/MNIST_database) and [ArtBench](https://paperswithcode.com/dataset/artbench-10) for CVAE. 
+MNIST and ArtBench-32x32 will be downloaded automatically.
+Download the ArtBench-256x256 version here: [ArtBench-10 on GitHub](https://github.com/liaopeiyuan/artbench/blob/main/README.md), the extended version [Kaggle (256x256 + AI gen)](https://www.kaggle.com/datasets/ravidussilva/real-ai-art). 
 
 ## Train
 1. To setup wandb, if you have not used it before, run `wandb login` in bash.
@@ -75,7 +77,7 @@ The final DCGAN model was trained with
 ## Results
 | Generated samples  | Final samples |
 | ------------- | ------------- |
-| ![DCGAN](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
+| ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
 
 ## Wandb 
 1. [Wandb project](https://wandb.ai/tgritsaev/tiny_stories_dl2/overview?workspace=user-tgritsaev).
