@@ -1,6 +1,7 @@
 import torch
 import torchvision
 from torchvision.datasets import MNIST
+import torchvision.transforms.functional as TF
 
 
 class MNISTWrapper(MNIST):
@@ -11,4 +12,8 @@ class MNISTWrapper(MNIST):
     def __getitem__(self, index: int):
         img, target = self.data[index], int(self.targets[index])
 
-        return self.resize(img.unsqueeze(0)).to(torch.float32), target
+        return TF.normalize(
+            self.resize(img.unsqueeze(0)).to(torch.float32) / 255.0,
+            (0.5),
+            (0.5),
+        )
