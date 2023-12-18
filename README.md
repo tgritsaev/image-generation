@@ -80,8 +80,8 @@ The final DCGAN model was trained with
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
 
 ## Wandb 
-1. [Wandb project](https://wandb.ai/tgritsaev/tiny_stories_dl2/overview?workspace=user-tgritsaev).
-2. [Wandb report](https://wandb.ai/tgritsaev/dl-2-tinystories/reports/bhw-dl-2-HSE-course-tinystories--Vmlldzo2MTUzNzk4).
+1. [GAN wandb project](https://wandb.ai/tgritsaev/dl2-gan-generation?workspace=user-tgritsaev).
+2. [CVAE wandb project](https://wandb.ai/tgritsaev/dl2-cvae-generation?workspace=user-tgritsaev).
 
 ## Authors
 * Timofei Gritsaev
