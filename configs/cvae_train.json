@@ -7,7 +7,7 @@
             "num_classes": 10,
             "latent_dim": 128,
             "img_size": 256,
-            "kld_coef": 0.00025,
+            "kld_coef": 0.000025,
             "fmp_coef": 0.025
         }
     },
