@@ -73,11 +73,9 @@ python3 train.py -c config_path -w True
 The final DCGAN model was trained with 
 
 ## Results
-<!-- | Generated samples  | Final samples |
+| Generated samples  | Final samples |
 | ------------- | ------------- |
-| ![](https://github.com/tgritsaev/image-generation/tree/main/examples/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/tree/main/dcgan/final_dcgan.png)  | -->
-
-![](https://github.com/tgritsaev/image-generation/tree/main/examples/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/tree/main/dcgan/final_dcgan.png)
+| ![](https://github.com/tgritsaev/image-generation/blob/main/results/dcgan.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_dcgan.png)  |
 
 ## Wandb 
 1. [Wandb project](https://wandb.ai/tgritsaev/tiny_stories_dl2/overview?workspace=user-tgritsaev).
