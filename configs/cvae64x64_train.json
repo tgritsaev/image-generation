@@ -13,7 +13,7 @@
     },
     "data": { 
         "train": {
-            "type": "ArtBench10_256x256",
+            "type": "ArtBench10_64x64",
             "dataset_args": {
                 "root": "/kaggle/input/real-ai-art/Real_AI_SD_LD_Dataset",
                 "train": true
@@ -25,7 +25,7 @@
             }
         },
         "test": {
-            "type": "ArtBench10_256x256",
+            "type": "ArtBench10_64x64",
             "dataset_args": {
                 "root": "/kaggle/input/real-ai-art/Real_AI_SD_LD_Dataset",
                 "train": false,
