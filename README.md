@@ -7,9 +7,9 @@ See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week
 
 ## Code organization
 ```shell
-├── README.md             <- Top-level README.
-├── requirements.txt      <- project requirements.
-├── train.py              <- train code.
+├── README.md                       <- Top-level README.
+├── requirements.txt                <- project requirements.
+├── train.py                        <- train code.
 ├── congigs/               
 │   ├── cvae_mnist_train.json
 │   ├── cvae_train.json
@@ -21,7 +21,7 @@ See the original [task statement](https://github.com/puhsu/dl-hse/tree/main/week
 ├── scripts/               
 │   └── create_gif.ipynb
 │
-└── src/                  <- main code directory.
+└── src/                            <- main code directory.
     ├── datasets/
     │   ├── artbench10_32x32.py
     │   ├── artbench10_256x256.py
@@ -88,3 +88,5 @@ The final DCGAN model was trained with
 
 ## Credits
 DCGAN implementation was taken from the [pytorch DCGAN tutorial](https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html).
+
+DDPM impementation was taken from the [DL-2 in HSE homework](https://github.com/puhsu/dl-hse/blob/main/week08-VAE-Diff/shw5/homework.ipynb), which is fork from [openai/guided-diffusion](https://github.com/openai/guided-diffusion). Unet implementation was taken from the [Pytorch-UNet](https://github.com/milesial/Pytorch-UNet).
