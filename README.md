@@ -11,7 +11,7 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
 ├── report-ru.pdf                    <- report
 ├── requirements.txt                 <- project requirements
 ├── train.py                         <- train code
-├── congigs/                         <- models' configs
+├── congigs/                         <- models configs
 │   ├── cvae_mnist_train.json
 │   ├── cvae32x32_train.json
 │   ├── cvae64x64_train.json
@@ -46,8 +46,8 @@ The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-V
     │   
     ├── trainers/                    
     │   ├── __init__.py                 
-    │   ├── trainer.py               <- cvae's and ddpm's trainer           
-    │   └── gan_trainer.py           <- gan's trainer                
+    │   ├── trainer.py               <- cvae and ddpm trainer           
+    │   └── gan_trainer.py           <- gan trainer                
     │
     ├── utils/   
     │   ├── __init__.py 
