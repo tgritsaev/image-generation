@@ -84,7 +84,7 @@ python3 train.py -c config_path -w True
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif) | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_mnist_cvae.png)
 
 ## Report 
-Report is in the `report_ru.pdf` (only Russian).
+`report_ru.pdf` (only Russian).
 
 ## Wandb 
 1. [GAN wandb project](https://wandb.ai/tgritsaev/dl2-gan-generation?workspace=user-tgritsaev).
