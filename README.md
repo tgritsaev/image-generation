@@ -82,6 +82,9 @@ python3 train.py -c config_path -w True
 | Reconstructed images during training (real in the second row)  | Generated samples during training | Final generated samples |
 | :---: | :---: | :---: |
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif) | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_mnist_cvae.png)
+| ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_art_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_art_cvae.gif) | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_art_cvae.png)
+
+We see the potential in CVAE, but 12 hours on Kaggle free resources are not enough for ArtBench-10. 
 
 ## Report & Wandb 
 1. `report-ru.pdf` (only Russian).
