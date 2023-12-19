@@ -84,7 +84,7 @@ python3 train.py -c config_path -w True
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_mnist_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_mnist_cvae.gif) | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_mnist_cvae.png)
 | ![](https://github.com/tgritsaev/image-generation/blob/main/results/recontsructed_art_cvae.gif)  | ![](https://github.com/tgritsaev/image-generation/blob/main/results/generated_art_cvae.gif) | ![](https://github.com/tgritsaev/image-generation/blob/main/results/final_art_cvae.png)
 
-CVAE possesses the potential to train on ArtBench-10, but 12 hours on Kaggle free resources are not enough for such complex dataset.
+CVAE possesses the potential to train on ArtBench-10, but 12 hours on free Kaggle's resources are not enough for such complex dataset.
 
 ## Report & Wandb 
 1. `report-ru.pdf` (only Russian).
