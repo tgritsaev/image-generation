@@ -1,7 +1,7 @@
 # Image generation with Diffusion Model
-HSE Deep Learning course homework.
 
-During this homework I implemented DCGAN, CVAE and diffusion model (all models are tested except of diffusion model).
+In this repository was implemented homework at the Deep Learning university course. 
+During this homework I implemented DCGAN, CVAE and DDPM. All models are successfully trained with the except for DDPM.
 
 The original [task statement](https://github.com/puhsu/dl-hse/tree/main/week08-VAE-Diff/bhw02).
 
